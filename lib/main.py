@@ -12,8 +12,8 @@
 
 # if __name__ == "__main__":
 #     main()
+
 import car_functions
-import dealership
 
 def main_menu():
     while True:
@@ -23,7 +23,7 @@ def main_menu():
         print("2. View Cars by Type")
         print("3. View Cars By Price")
         print("4. View Cars by Mileage")
-        print("5. Manage Dealership Information")
+        print("5. Delete a car")
       
         choice = input("Please enter your choice: ")
 
@@ -36,13 +36,11 @@ def main_menu():
         elif choice == "4":
             car_functions.view_cars_by_mileage()
         elif choice == "5":
-        #call function for the dealership // 
-        # here we have to explore more if we are having the employees info
-        #also we can create extra options in the main menu for the dealership 
+            car_functions.delete_car()
+        elif choice == "6":
             pass
         else:
             print("Invalid choice, please select option 1-6.")
 
 if __name__ == "__main__":
     main_menu()
-
