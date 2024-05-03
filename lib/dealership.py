@@ -1,3 +1,5 @@
+import ipdb
+
 class Dealer:
     def __init__(self, name, location, contact, employees):
         # Initialize the Dealer object with provided attributes
@@ -40,12 +42,47 @@ class Car:
         return f"Make: {self.make}\nModel: {self.model}\nYear: {self.year}\nPrice: {self.price}\nMileage: {self.mileage}\nColor: {self.color}\nAvailability: {availability}\nCar Type: {self.car_type}"
 
 
-# Mock Data for testing the classes
-dealer = Dealer("ABC Motors", "123 Main St", "123-456-7890", 10)  # Creating a Dealer object
-car_type = CarType("Electric", "Electric cars use electricity for propulsion")  # Creating a CarType object
-car = Car("Tesla", "Model S", 2022, 80000, 5000, "Red", True, car_type)  # Creating a Car object
+# # Mock Data for testing the classes
+# dealer = Dealer("ABC Motors", "123 Main St", "123-456-7890", 10)  # Creating a Dealer object
+# car_type = CarType("Electric", "Electric cars use electricity for propulsion")  # Creating a CarType object
+# car = Car("Tesla", "Model S", 2022, 80000, 5000, "Red", True, car_type)  # Creating a Car object
 
-# Printing the string representations of the objects
-print(dealer)  # Printing dealer info
-print(car_type)  # Printing car type info
-print(car)  # Printing car info
+# # Printing the string representations of the objects
+# print(dealer)  # Printing dealer info
+# print(car_type)  # Printing car type info
+# print(car)  # Printing car info
+
+ipdb.set_trace()
+
+# Add method to update car availability
+def mark_as_sold(self):
+        self.available = False
+
+    # Add method to update car details
+def update_details(self, make=None, model=None, year=None, price=None, mileage=None, color=None, available=None, car_type=None):
+        if make:
+            self.make = make
+        if model:
+            self.model = model
+        if year:
+            self.year = year
+        if price:
+            self.price = price
+        if mileage:
+            self.mileage = mileage
+        if color:
+            self.color = color
+        if available is not None:
+            self.available = available
+        if car_type:
+            self.car_type = car_type
+
+    # Add method to associate car with its type
+def associate_car_type(self, car_type):
+        self.car_type = car_type
+
+    # Add method to disassociate car from its type
+def disassociate_car_type(self):
+        self.car_type = None
+
+
