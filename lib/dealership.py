@@ -52,7 +52,7 @@ class Car:
 # print(car_type)  # Printing car type info
 # print(car)  # Printing car info
 
-ipdb.set_trace()
+# ipdb.set_trace()
 
 # Add method to update car availability
 def mark_as_sold(self):

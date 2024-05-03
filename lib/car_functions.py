@@ -1,9 +1,11 @@
 from dealership import Car
+from __init__ import CURSOR, CONN
+
 
 cars = []
 
-def add_car():
-    print("Add a car")
+def add_car(car):
+    
     make = input("Enter car make: ")
     model = input("Enter car model: ")
     year = int(input("Enter car year: "))
@@ -11,10 +13,19 @@ def add_car():
     mileage = float(input("Enter car mileage: "))
     car_type = input("Enter car type (regular or electric): ")
     
+    
+    CURSOR.execute("INSERT INTO cars VALUES (?, ?, ?, ?, ?, ?, ?, ?)", 
+                   (car.make, car.model, car.year, car.price, car.mileage, car.color, car.available, car.car_type))    
+    
+    print("Add a car")
+ 
+    
+
     # Create a Car object
     car = Car(make, model, year, price, mileage, "", True, car_type)
     cars.append(car)  # Add the car to the list
     print("Car added successfully!")
+
 
 def view_cars_by_type():
     print("View Cars by Type:")
@@ -47,3 +58,5 @@ def view_cars_by_mileage():
             print(car)
     else:
         print("No cars found within this mileage range.")
+        
+    
