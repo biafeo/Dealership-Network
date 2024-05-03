@@ -50,7 +50,7 @@ print(dealer2)
 for car in dealer2.inventory:
     print(car)
 
-ipdb.set_trace()
+# ipdb.set_trace()
 
 # Add method to update car availability
 def mark_as_sold(self):
