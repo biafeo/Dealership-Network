@@ -5,15 +5,47 @@ def main_menu():
         print("Welcome to the Dealership System!")
         print("Main Menu:")
         print("1. Add a car")
-        print("2. View Cars by Type")
-        print("3. View Cars By Price")
-        print("4. View Cars by Mileage")
-        print("5. Delete a car")
+        print("2. Update car")
+        print("3. Delete a car")
+        print("4. View Cars")
+      
       
         choice = input("Please enter your choice: ")
 
         if choice == "1":
             car_functions.add_car()
+        elif choice == "2":
+            car_functions.update_car()
+        elif choice == "3":
+            car_functions.delete_car()
+        elif choice == "4":
+            view_cars_menu()
+        elif choice == "5":
+            car_functions.view_cars_by_price()
+        elif choice == "6":
+            pass
+        else:
+            print("Invalid choice, please select option 1-6.")
+            
+            
+            
+def view_cars_menu():
+    while True:
+        print("\nView Cars Menu:")
+        print("1. View All cars")
+        print("2. view cars by type")
+        print("3. view cars by price range")
+        print("4. view cars by mileage range")
+        print("5. view cars by price ascending")
+        print("6. view cars by price descending")
+        print("7. view cars by mileage ascending")
+        print("8. view cars by mileage descending")
+        print("9. only available cars")
+        print("10. only sold cars")
+        
+        choice = input("please neter your choice: ")
+        if choice == "1":
+            pass
         elif choice == "2":
             car_functions.view_cars_by_type()
         elif choice == "3":
@@ -21,11 +53,19 @@ def main_menu():
         elif choice == "4":
             car_functions.view_cars_by_mileage()
         elif choice == "5":
-            car_functions.delete_car()
+            car_functions.sort_cars_price_asc()
         elif choice == "6":
-            pass
+            car_functions.sort_cars_price_des()
+        elif choice == "7":
+            car_functions.sort_cars_mileage_asc()
+        elif choice == "8":
+            car_functions.sort_cars_mileage_des()
+        elif choice == "9":
+            car_functions.see_only_available_cars()
+        elif choice == "10":
+            car_functions.see_only_sold_cars()
         else:
-            print("Invalid choice, please select option 1-6.")
+            print("Please enter a valid option:")
 
 if __name__ == "__main__":
     main_menu()

@@ -40,29 +40,6 @@ class Car:
         return f"Make: {self.make}\nModel: {self.model}\nYear: {self.year}\nPrice: {self.price}\nMileage: {self.mileage}\nColor: {self.color}\nAvailability: {availability}\nCar Type: {self.car_type}"
 
 
-# Add method to update car availability
-def mark_as_sold(self):
-        self.available = False
-
-    # Add method to update car details
-def update_details(self, make=None, model=None, year=None, price=None, mileage=None, color=None, available=None, car_type=None):
-        if make:
-            self.make = make
-        if model:
-            self.model = model
-        if year:
-            self.year = year
-        if price:
-            self.price = price
-        if mileage:
-            self.mileage = mileage
-        if color:
-            self.color = color
-        if available is not None:
-            self.available = available
-        if car_type:
-            self.car_type = car_type
-
     # Add method to associate car with its type
 def associate_car_type(self, car_type):
         self.car_type = car_type
