@@ -74,3 +74,13 @@ def delete_car():
         print("Car deleted successfully!")
     else:
         print("No car found with the given make and model.")
+        
+        # see bears lab to add more functionality 
+def sort_cars_price_asc():
+    pass
+def sort_cars_price_des():
+    pass
+def sort_cars_mileage_asc():
+    pass
+def sort_cars_mileage_des():
+    pass
