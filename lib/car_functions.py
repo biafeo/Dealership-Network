@@ -75,7 +75,12 @@ def delete_car():
     else:
         print("No car found with the given make and model.")
         
+        
+        
+def update_car():
+        
         # see bears lab to add more functionality 
+        # maybe have a nested sort option
 def sort_cars_price_asc():
     pass
 def sort_cars_price_des():
@@ -83,4 +88,8 @@ def sort_cars_price_des():
 def sort_cars_mileage_asc():
     pass
 def sort_cars_mileage_des():
+    pass
+def see_only_available_cars():
+    pass
+def see_only_sold_cars():
     pass
