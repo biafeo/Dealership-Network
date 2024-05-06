@@ -100,10 +100,10 @@ class Car:
         
         
     #method to view car by type
-    
+
     @classmethod
     def view_cars_by_type(cls, car_type):
-        filtered_cars = CURSOR.execute("SELECT * FROM cars WHERE car_type = ?", (car_type)).fetchall()
+        filtered_cars = CURSOR.execute("SELECT * FROM cars WHERE car_type = ?", (car_type,)).fetchall()
         return [cls.car_from_db(car_row) for car_row in filtered_cars]
         
 

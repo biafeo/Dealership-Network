@@ -41,7 +41,8 @@ def view_cars_menu():
         if choice == "1":
             car_functions.view_all_cars()
         elif choice == "2":
-            car_functions.view_cars_by_type()
+            car_type = input("Enter car type (eletric or gas): ")
+            car_functions.view_cars_by_type(car_type)
         elif choice == "3":
             car_functions.sort_cars_price_asc()
         elif choice == "4":

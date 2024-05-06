@@ -79,7 +79,6 @@ def view_cars_by_type(car_type):
             print(car)
     else:
         print("No cars of this type found.")
-
                     
  
 def sort_cars_price_asc():
