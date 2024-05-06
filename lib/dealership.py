@@ -106,67 +106,39 @@ class Car:
     @classmethod
     def sort_cars_price_asc(cls):
         sort_price_asc = CURSOR.execute("SELECT * FROM cars ORDER BY price ASC;").fetchall()
-        cars = [cls.car_from_db(car_row) for car_row in sort_price_asc]
-        if cars:
-            for car in cars:
-                print(car) 
-        else:
-            print("No cars found.")
+        return [cls.car_from_db(car_row) for car_row in sort_price_asc]
+
   
     #method to sort price by desc
     @classmethod
     def sort_cars_price_des(cls):
         sort_price_desc =  CURSOR.execute("SELECT * FROM cars ORDER BY cars.price DESC;").fetchall()
-        cars = [cls.car_from_db(car_row) for car_row in sort_price_desc]
-        if cars:
-            for car in cars:
-                print(car)
-        else:
-            print("No cars found.")
-            
+        return [cls.car_from_db(car_row) for car_row in sort_price_desc]
+        
     #method to sort mileage asc
     @classmethod
     def sort_cars_mileage_asc(cls):
         sort_mileage_asc = CURSOR.execute("SELECT * FROM cars ORDER BY cars.mileage ASC;").fetchall()
-        cars = [cls.car_from_db(car_row) for car_row in sort_mileage_asc]
-        if cars:
-            for car in cars:
-                print(car)
-        else:
-            print("No cars found")
+        return [cls.car_from_db(car_row) for car_row in sort_mileage_asc]
+    
             
     #method sorty mileage desc
     @classmethod
     def sort_cars_mileage_des(cls):
         sort_mileage_desc = CURSOR.execute("SELECT * FROM cars ORDER BY cars.mileage DESC;").fetchall()
-        cars = [cls.car_from_db(car_row) for car_row in sort_mileage_desc]
-        if cars:
-            for car in cars:
-                print(car)
-        else:
-            print("No cars found.")
+        return [cls.car_from_db(car_row) for car_row in sort_mileage_desc]
+
     
     
     #method only available cars
     @classmethod
     def see_only_available_cars(cls):
         only_available = CURSOR.execute("SELECT * FROM cars WHERE available = True;").fetchall()
-        cars = [cls.car_from_db(car_row) for car_row in only_available]
-        if cars:
-            for car in cars:
-                print(car)     
-        else:
-            print("No cars available")
-            
+        return [cls.car_from_db(car_row) for car_row in only_available]
+  
             
     #method only sold cars
     @classmethod
     def see_only_sold_cars(cls):
         only_sold =  CURSOR.execute("SELECT * FROM cars WHERE available = False;").fetchall()
-        cars = [cls.car_from_db(car_row) for car_row in only_sold]
-        if cars:
-            for car in cars:
-                print(car)
-        else:
-            print("No cars sold")
- 
+        return [cls.car_from_db(car_row) for car_row in only_sold]
