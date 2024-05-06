@@ -26,7 +26,6 @@ def add_car():
     price = float(input("Enter car price: "))
     mileage = float(input("Enter car mileage: "))
     color = input("Enter color: ")
-    available = input("Enter availability (True or False): ").lower()  
     available = True 
     car_type = input("Enter car type (gas or eletric): ")
     try:
@@ -61,7 +60,13 @@ def update_car():
         new_price = input(f"Enter new price [{car.price}]: ") 
         new_mileage = input(f"Enter new mileage [{car.mileage}]: ") 
         new_color = input(f"Enter new color [{car.color}]: ")
-        new_available = input(f"Enter availability (True or False) [{car.available}]: ")
+        new_available = input(f"Enter availability (True or False): ")
+        if new_available.lower() == "true":
+            new_available = True
+        elif new_available.lower() == "false":
+            new_available = False
+        else:
+            new_available = car.available
         new_car_type = input(f"Enter new car type [{car.car_type}]: ") 
         
         update_car = car.update(new_make, new_model, new_year, new_price, new_mileage, new_color, new_available, new_car_type)
@@ -72,21 +77,6 @@ def update_car():
     else:
         print("No car found with the given make and model.")
 
-
-# def view_all_cars():
-#     print("View All Cars:")
-#     cars = Car.get_all()
-#     if cars:
-#         headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
-#         rows = []
-#         for car in cars:
-#             availability = bool(car.available)
-#             availability_text = "Available" if availability else "Not Available"
-#             row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
-#             rows.append(row)
-#         print(tabulate(rows, headers=headers, tablefmt="grid"))
-#     else:
-#         print("No cars found.")
 
 def view_cars_by_type(car_type):
     print("View Cars by Type:")
