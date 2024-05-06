@@ -11,7 +11,7 @@ def view_all_cars():
         rows = []
         for car in cars:
             availability = bool(car.available)
-            availability_text = "Available" if availability else "Not Available"
+            availability_text = "Available" if availability else "Sold"
             row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))
@@ -186,7 +186,7 @@ def see_only_sold_cars():
         rows = []
         for car in only_sold:
             availability = bool(car.available)
-            availability_text = "Available" if availability else "Not Available"
+            availability_text = "Available" if availability else "Sold"
             row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))

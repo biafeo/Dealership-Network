@@ -2,7 +2,9 @@ import car_functions
 
 def main_menu():
     while True:
+        print("=" * 50)
         print("Welcome to the Dealership System!")
+        print("=" * 50)
         print("Main Menu:")
         print("1. Add a car")
         print("2. Update car")
@@ -27,17 +29,20 @@ def main_menu():
             
 def view_cars_menu():
     while True:
-        print("\nView Cars Menu:")
+        print("=" * 50)
+        print("View Cars Menu:")
+        print("=" * 50)
         print("1. View All cars")
-        print("2. view cars by type")
-        print("3. view cars by price ascending")
-        print("4. view cars by price descending")
-        print("5. view cars by mileage ascending")
-        print("6. view cars by mileage descending ")
-        print("7. only available cars ")
-        print("8. only sold cars")
+        print("2. View cars by type")
+        print("3. View cars by price ascending")
+        print("4. View cars by price descending")
+        print("5. View cars by mileage ascending")
+        print("6. View cars by mileage descending ")
+        print("7. Only available cars ")
+        print("8. Only sold cars")
+        print("9. Back to main menu")
         
-        choice = input("please neter your choice: ")
+        choice = input("Please enter your choice: ")
         if choice == "1":
             car_functions.view_all_cars()
         elif choice == "2":
@@ -55,6 +60,8 @@ def view_cars_menu():
             car_functions.see_only_available_cars()
         elif choice == "8":
             car_functions.see_only_sold_cars()
+        elif choice == "9":
+            main_menu()
         else:
             print("Please enter a valid option:")
 
