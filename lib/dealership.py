@@ -2,35 +2,29 @@ from __init__ import CURSOR, CONN
 
 class Dealer:
     def __init__(self, name, location, contact, employees):
-        # Initialize the Dealer object with provided attributes
-        self.name = name  # Name of the dealer
-        self.location = location  # Location of the dealer
-        self.contact = contact  # Contact information of the dealer
-        self.employees = employees  # Number of employees at the dealer
-
+        self.name = name
+        self.location = location
+        self.contact = contact
+        self.employees = employees
+        self.inventory = []  
     def __str__(self):
-        # Return a string representation of the dealer
         return f"Dealer Name: {self.name}\nLocation: {self.location}\nContact: {self.contact}\nEmployees: {self.employees}"
 
-
-
 class Car:
-    def __init__(self, make, model, year, price, mileage, color, available, car_type, id=None):
-        # Initialize the Car object with provided attributes
-        self.make = make  # Make of the car
-        self.model = model  # Model of the car
-        self.year = year  # Year of the car
-        self.price = price  # Price of the car
-        self.mileage = mileage  # Mileage of the car
-        self.color = color  # Color of the car
-        self.available = available  # Availability of the car
-        self.car_type = car_type  # CarType object representing the type of the car
-        self.id = id
+    def __init__(self, make, model, year, price, mileage, color, available, car_type_name, car_type_description):
+        self.make = make
+        self.model = model
+        self.year = year
+        self.price = price
+        self.mileage = mileage
+        self.color = color
+        self.available = available
+        self.car_type_name = car_type_name  # Car type name attribute
 
     def __str__(self):
-        # Return a string representation of the car
         availability = "Available" if self.available else "Not Available"
-        return f"Make: {self.make}\nModel: {self.model}\nYear: {self.year}\nPrice: {self.price}\nMileage: {self.mileage}\nColor: {self.color}\nAvailability: {availability}\nCar Type: {self.car_type}"
+        return f"Make: {self.make}\nModel: {self.model}\nYear: {self.year}\nPrice: {self.price}\nMileage: {self.mileage}\nColor: {self.color}\nAvailability: {availability}\nCar Type: {self.car_type_name}\nDescription: {self.car_type_description}"
+
 
     @classmethod
     def car_from_db(cls, car_row):
@@ -173,9 +167,4 @@ class Car:
                 print(car)
         else:
             print("No cars sold")
-            
-
-    
-        
-
-        
+ 
