@@ -3,8 +3,6 @@ from __init__ import CURSOR, CONN
 from tabulate import tabulate
 
 
-
-
 def view_all_cars():
     print("View All Cars:")
     cars = Car.get_all()
@@ -84,61 +82,28 @@ def view_cars_by_type(car_type):
 def sort_cars_price_asc():
     print("view cars by price ascending:")
     Car.sort_cars_price_asc()
-    
+ 
+   
 def sort_cars_price_des():
     print("view cars by price descending:")
-    CURSOR.execute("SELECT * FROM cars ORDER BY cars.price DESC;")
-    results= CURSOR.fetchall()
-    if results:
-        for car in results:
-            print(car)
-        else:
-            print("No cars found")
-            
+    Car.sort_cars_price_des()
+       
             
 def sort_cars_mileage_asc():
     print("view cars by mileage ascending:")
-    CURSOR.execute("SELECT * FROM cars ORDER BY cars.mileage ASC;")
-    results = CURSOR.fetchall()
-    if results:
-        for car in results:
-            print(car)
-    else:
-        print("No cars found")
-        
-        
+    Car.sort_cars_mileage_asc()
+
+  
 def sort_cars_mileage_des():
     print("view cars by mileage descending:")
-    CURSOR.execute("SELECT * FROM cars ORDER BY cars.mileage DESC;")
-    results= CURSOR.fetchall()
-    if results:
-        for car in results:
-            print(car)
-        else:
-            print("No cars found")
-    
-    
-    
-    
+    Car.sort_cars_mileage_des()
+
 def see_only_available_cars():
     print("view cars that are available:")
-    CURSOR.execute("SELECT * FROM cars WHERE available = True;")
-    results = CURSOR.fetchall()
-    if len(results) == 0:
-        print("no cars available")
-    else: 
-        for car in results:
-            print(car)
-
+    Car.see_only_available_cars()
 
 def see_only_sold_cars():
     print("view cars that are sold:")
-    CURSOR.execute("SELECT * FROM cars WHERE available = False;")
-    results = CURSOR.fetchall()
-    if len(results) == 0:
-        print("no cars sold")
-    else: 
-        for car in results:
-            print(car)
+    Car.see_only_sold_cars()
 
     

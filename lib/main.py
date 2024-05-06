@@ -34,8 +34,8 @@ def view_cars_menu():
         print("4. view cars by price descending")
         print("5. view cars by mileage ascending")
         print("6. view cars by mileage descending ")
-        print("7.only available cars ")
-        print("8.only sold cars")
+        print("7. only available cars ")
+        print("8. only sold cars")
         
         choice = input("please neter your choice: ")
         if choice == "1":
