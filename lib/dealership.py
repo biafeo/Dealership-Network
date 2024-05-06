@@ -105,7 +105,18 @@ class Car:
     def view_cars_by_type(cls, car_type):
         filtered_cars = CURSOR.execute("SELECT * FROM cars WHERE car_type = ?", (car_type,)).fetchall()
         return [cls.car_from_db(car_row) for car_row in filtered_cars]
-        
+
+    #method to sort price by asc
+    @classmethod
+    def sort_cars_price_asc(cls):
+        sort_price_asc = CURSOR.execute("SELECT * FROM cars ORDER BY price ASC;").fetchall()
+        cars = [cls.car_from_db(car_row) for car_row in sort_price_asc]
+        if cars:
+            for car in cars:
+                print(car) 
+        else:
+            print("No cars found.")
+  
 
 
     

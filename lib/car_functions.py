@@ -83,13 +83,7 @@ def view_cars_by_type(car_type):
  
 def sort_cars_price_asc():
     print("view cars by price ascending:")
-    CURSOR.execute("SELECT * FROM cars ORDER BY cars.price ASC;")
-    results = CURSOR.fetchall()
-    if results:
-        for car in results:
-            print(car)
-    else:
-        print("No cars found")
+    Car.sort_cars_price_asc()
     
 def sort_cars_price_des():
     print("view cars by price descending:")
