@@ -1,8 +1,22 @@
 from dealership import Car
 from __init__ import CURSOR, CONN
+from tabulate import tabulate
 
 
-cars = []
+
+
+def view_all_cars():
+    print("View All Cars:")
+    cars = Car.get_all()
+    if cars:
+        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
+        rows = []
+        for car in cars:
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, "Available" if car.available else "Not Available", car.car_type]
+            rows.append(row)
+        print(tabulate(rows, headers=headers, tablefmt="grid"))
+    else:
+        print("No cars found.")
 
 def add_car():
     make = input("Enter car make: ")
@@ -13,17 +27,11 @@ def add_car():
     color = input("Enter color: ")
     available = True 
     car_type = input("Enter car type (regular or electric): ")
-    
     try:
-       CURSOR.execute("INSERT INTO cars (make, model, year, price, mileage, color, available, car_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                      (make, model, year, price, mileage, color, available, car_type))
-       CONN.commit()
-       print("Car added successfully!")
+        Car.add_car(make, model, year, price, mileage, color, available, car_type)
+        print("Car added successfully!")
     except Exception:
        print("Enter valid car")
-
-    car = Car(make, model, year, price, mileage, color, available, car_type)
-    cars.append(car)  
 
 
         
@@ -31,89 +39,49 @@ def delete_car():
     print("Delete Car:")
     make = input("Enter car make: ")
     model = input("Enter car model: ")
-
-    CURSOR.execute("DELETE FROM cars WHERE make = ? AND model = ?", (make, model))
-    CONN.commit()
-
-    if CURSOR.rowcount > 0:
-        print("Car deleted successfully!")
-    else:
-        print("No car found with the given make and model.")
-        
-        #not working properly if left blank it delets the cell// ask morgan monday
+    Car.delete_car(make, model)
+    
+    
 def update_car():
     print("Update car:")
     make = input("Enter car make: ")
     model = input("Enter car model: ")
-
-    CURSOR.execute("SELECT * FROM cars WHERE make = ? AND model = ?", (make, model))
-    car = CURSOR.fetchone()
-
+    
+    car = Car.find_by_make_and_model(make, model)
+    
+    
     if car:
         print("Fill in only the inputs that you want to update (leave blank to keep the same)")
 
-        new_make = input(f"Enter new make [{car[0]}]: ") or car[0]
-        new_model = input(f"Enter new model [{car[1]}]: ") or car[1]
-        new_year = input(f"Enter new year [{car[2]}]: ") or car[2]
-        new_price = input(f"Enter new price [{car[3]}]: ") or car[3]
-        new_mileage = input(f"Enter new mileage [{car[4]}]: ") or car[4]
-        new_color = input(f"Enter new color [{car[5]}]: ") or car[5]
-        new_available = input(f"Enter availability (True or False) [{car[6]}]: ") or car[6]
-        new_car_type = input(f"Enter new car type [{car[7]}]: ") or car[7]
-
-        CURSOR.execute(
-            "UPDATE cars SET make = ?, model = ?, year = ?, price = ?, mileage = ?, color = ?, available = ?, car_type = ? WHERE make = ? AND model = ?",
-            (new_make, new_model, new_year, new_price, new_mileage, new_color, new_available, new_car_type, make, model))
-        CONN.commit()
-
-        if CURSOR.rowcount > 0:
+        new_make = input(f"Enter new make [{car.make}]: ")
+        new_model = input(f"Enter new model [{car.model}]: ")
+        new_year = input(f"Enter new year [{car.year}]: ") 
+        new_price = input(f"Enter new price [{car.price}]: ") 
+        new_mileage = input(f"Enter new mileage [{car.mileage}]: ") 
+        new_color = input(f"Enter new color [{car.color}]: ")
+        new_available = input(f"Enter availability (True or False) [{car.available}]: ")
+        new_car_type = input(f"Enter new car type [{car.car_type}]: ") 
+        
+        update_car = car.update(new_make, new_model, new_year, new_price, new_mileage, new_color, new_available, new_car_type)
+        if update_car:
             print("Car updated successfully!")
-        else:
-            print("No car found with the given make and model.")
+        else: 
+            print("Failed to update car")
     else:
         print("No car found with the given make and model.")
-        
 
 
-def view_cars_by_type():
+def view_cars_by_type(car_type):
     print("View Cars by Type:")
-    car_type = input("Enter car type (regular or electric): ").lower()
-    CURSOR.execute("SELECT * FROM cars WHERE car_type = ?", (car_type,))
-    filtered_cars = CURSOR.fetchall()
+    filtered_cars = Car.view_cars_by_type(car_type)
     if filtered_cars:
         for car in filtered_cars:
             print(car)
     else:
         print("No cars of this type found.")
 
-def view_cars_by_price():
-    print("View Cars by Price:")
-    min_price = float(input("Enter minimum price: "))
-    max_price = float(input("Enter maximum price: "))
-    CURSOR.execute("SELECT * FROM cars WHERE price BETWEEN ? AND ?", (min_price, max_price))
-    filtered_cars = CURSOR.fetchall()
-    if filtered_cars:
-        for car in filtered_cars:
-            print(car)
-    else:
-        print("No cars found within this price range.")
-
-def view_cars_by_mileage():
-    print("View Cars by Mileage:")
-    min_mileage = float(input("Enter minimum mileage: "))
-    max_mileage = float(input("Enter maximum mileage: "))
-    CURSOR.execute("SELECT * FROM cars WHERE mileage BETWEEN ? AND ?", (min_mileage, max_mileage))
-    filtered_cars = CURSOR.fetchall()
-    if filtered_cars:
-        for car in filtered_cars:
-            print(car)
-    else:
-        print("No cars found within this mileage range.")
-        
-        
-            
-        # see bears lab to add more functionality 
-        # maybe have a nested sort option
+                    
+ 
 def sort_cars_price_asc():
     print("view cars by price ascending:")
     CURSOR.execute("SELECT * FROM cars ORDER BY cars.price ASC;")
