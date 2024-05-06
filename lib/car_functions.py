@@ -73,41 +73,134 @@ def update_car():
         print("No car found with the given make and model.")
 
 
+# def view_all_cars():
+#     print("View All Cars:")
+#     cars = Car.get_all()
+#     if cars:
+#         headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
+#         rows = []
+#         for car in cars:
+#             availability = bool(car.available)
+#             availability_text = "Available" if availability else "Not Available"
+#             row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
+#             rows.append(row)
+#         print(tabulate(rows, headers=headers, tablefmt="grid"))
+#     else:
+#         print("No cars found.")
+
 def view_cars_by_type(car_type):
     print("View Cars by Type:")
     filtered_cars = Car.view_cars_by_type(car_type)
     if filtered_cars:
+        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
+        rows = []
         for car in filtered_cars:
-            print(car)
+            availability = bool(car.available)
+            availability_text = "Available" if availability else "Not Available"
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
+            rows.append(row)
+        print(tabulate(rows, headers=headers, tablefmt="grid"))
     else:
         print("No cars of this type found.")
                     
  
 def sort_cars_price_asc():
     print("view cars by price ascending:")
-    Car.sort_cars_price_asc()
- 
+    sort_price_asc = Car.sort_cars_price_asc()
+    if sort_price_asc:
+        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
+        rows = []
+        for car in sort_price_asc:
+            availability = bool(car.available)
+            availability_text = "Available" if availability else "Not Available"
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
+            rows.append(row)
+        print(tabulate(rows, headers=headers, tablefmt="grid"))
+    else:
+        print("No cars found.")
    
 def sort_cars_price_des():
     print("view cars by price descending:")
-    Car.sort_cars_price_des()
+    sort_price_desc = Car.sort_cars_price_des()
+    if sort_price_desc:
+        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
+        rows = []
+        for car in sort_price_desc:
+            availability = bool(car.available)
+            availability_text = "Available" if availability else "Not Available"
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
+            rows.append(row)
+        print(tabulate(rows, headers=headers, tablefmt="grid"))
+            
+    else:
+        print("No cars found.")
+            
        
             
 def sort_cars_mileage_asc():
     print("view cars by mileage ascending:")
-    Car.sort_cars_mileage_asc()
+    sort_mileage_asc = Car.sort_cars_mileage_asc()
+    if sort_mileage_asc:
+        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
+        rows = []
+        for car in sort_mileage_asc:
+            availability = bool(car.available)
+            availability_text = "Available" if availability else "Not Available"
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
+            rows.append(row)
+        print(tabulate(rows, headers=headers, tablefmt="grid"))
+    else:
+        print("No cars found.")
 
   
 def sort_cars_mileage_des():
     print("view cars by mileage descending:")
-    Car.sort_cars_mileage_des()
+    sort_mileage_desc = Car.sort_cars_mileage_des()
+    if sort_mileage_desc:
+        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
+        rows = []
+        for car in sort_mileage_desc:
+            availability = bool(car.available)
+            availability_text = "Available" if availability else "Not Available"
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
+            rows.append(row)
+        print(tabulate(rows, headers=headers, tablefmt="grid"))
+    else:
+        print("No cars found.")
+
+
+
 
 def see_only_available_cars():
     print("view cars that are available:")
-    Car.see_only_available_cars()
+    only_available = Car.see_only_available_cars()
+    if only_available:
+        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
+        rows = []
+        for car in only_available:
+            availability = bool(car.available)
+            availability_text = "Available" if availability else "Not Available"
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
+            rows.append(row)
+        print(tabulate(rows, headers=headers, tablefmt="grid"))
+    else:
+        print("No cars available")
+
+
 
 def see_only_sold_cars():
     print("view cars that are sold:")
-    Car.see_only_sold_cars()
+    only_sold = Car.see_only_sold_cars()
+    if only_sold:
+        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
+        rows = []
+        for car in only_sold:
+            availability = bool(car.available)
+            availability_text = "Available" if availability else "Not Available"
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
+            rows.append(row)
+        print(tabulate(rows, headers=headers, tablefmt="grid"))
+    else:
+        print("No cars sold")
 
     
