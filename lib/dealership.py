@@ -77,8 +77,9 @@ class Car:
             self.mileage = new_mileage 
         if new_color:
             self.color = new_color 
-        if new_available:
-            self.available = new_available 
+        if new_available is not None:
+            new_available_int = 1 if new_available else 0
+            self.available = new_available_int 
         if new_car_type:    
             self.car_type = new_car_type 
         
@@ -133,12 +134,12 @@ class Car:
     #method only available cars
     @classmethod
     def see_only_available_cars(cls):
-        only_available = CURSOR.execute("SELECT * FROM cars WHERE available = True;").fetchall()
+        only_available = CURSOR.execute("SELECT * FROM cars WHERE available = 1;").fetchall()
         return [cls.car_from_db(car_row) for car_row in only_available]
   
             
     #method only sold cars
     @classmethod
     def see_only_sold_cars(cls):
-        only_sold =  CURSOR.execute("SELECT * FROM cars WHERE available = False;").fetchall()
+        only_sold =  CURSOR.execute("SELECT * FROM cars WHERE available = 0;").fetchall()
         return [cls.car_from_db(car_row) for car_row in only_sold]
