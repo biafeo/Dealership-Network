@@ -11,24 +11,26 @@ class Dealer:
         return f"Dealer Name: {self.name}\nLocation: {self.location}\nContact: {self.contact}\nEmployees: {self.employees}"
 
 class Car:
-    def __init__(self, make, model, year, price, mileage, color, available, car_type_name, car_type_description):
+    def __init__(self, id, make, model, year, price, mileage, color, available, car_type):
+        self.id = id
         self.make = make
         self.model = model
         self.year = year
         self.price = price
         self.mileage = mileage
         self.color = color
-        self.available = available
-        self.car_type_name = car_type_name  # Car type name attribute
+        self.available = available        
+        self.car_type = car_type
 
     def __str__(self):
         availability = "Available" if self.available else "Not Available"
-        return f"Make: {self.make}\nModel: {self.model}\nYear: {self.year}\nPrice: {self.price}\nMileage: {self.mileage}\nColor: {self.color}\nAvailability: {availability}\nCar Type: {self.car_type_name}\nDescription: {self.car_type_description}"
-
-
+        return f"Make: {self.make}\nModel: {self.model}\nYear: {self.year}\nPrice: {self.price}\nMileage: {self.mileage}\nColor: {self.color}\nAvailability: {availability}\nCar Type: {self.car_type}"
+    
+    
+    
     @classmethod
     def car_from_db(cls, car_row):
-        return cls(car_row[1], car_row[2], car_row[3], car_row[4], car_row[5], car_row[6], car_row[7], car_row[8], car_row[0])
+        return cls(car_row[0], car_row[1], car_row[2], car_row[3], car_row[4], car_row[5], car_row[6], car_row[7], car_row[8])
     
     
     #method to fetch all cars

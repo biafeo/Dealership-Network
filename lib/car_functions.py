@@ -10,12 +10,15 @@ def view_all_cars():
         headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
         rows = []
         for car in cars:
-            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, "Available" if car.available else "Not Available", car.car_type]
+            availability = bool(car.available)
+            availability_text = "Available" if availability else "Not Available"
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))
     else:
         print("No cars found.")
-
+        
+        
 def add_car():
     make = input("Enter car make: ")
     model = input("Enter car model: ")
@@ -23,14 +26,15 @@ def add_car():
     price = float(input("Enter car price: "))
     mileage = float(input("Enter car mileage: "))
     color = input("Enter color: ")
+    available = input("Enter availability (True or False): ").lower()  
     available = True 
-    car_type = input("Enter car type (regular or electric): ")
+    car_type = input("Enter car type (gas or eletric): ")
     try:
         Car.add_car(make, model, year, price, mileage, color, available, car_type)
         print("Car added successfully!")
-    except Exception:
-       print("Enter valid car")
-
+    except Exception as e:
+       print("Error:", e)
+       print("Failed to add car. Please try again.")
 
         
 def delete_car():
