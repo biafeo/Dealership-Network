@@ -1,5 +1,7 @@
-import car_functions
+
 import dealership_functions
+import car_functions
+
 
 def main_menu():
     while True:
@@ -105,3 +107,6 @@ def dealership_menu():
             main_menu()
         else:
             print("Please enter a valid option:")
+            
+if __name__ == "__main__":
+    main_menu()

@@ -1,7 +1,8 @@
 from __init__ import CONN, CURSOR
         
 class Car:
-    def __init__(self, make, model, year, price, mileage, color, car_type, dealership_id):
+    def __init__(self, id, make, model, year, price, mileage, color, car_type, available, dealership_id=None):
+        self.id = id
         self.make = make
         self.model = model
         self.year = year
@@ -9,6 +10,7 @@ class Car:
         self.mileage = mileage
         self.color = color
         self.car_type = car_type
+        self.available = available
         self.dealership_id = dealership_id
 
     def __str__(self):
@@ -27,8 +29,10 @@ class Car:
             mileage REAL,
             color TEXT,
             car_type TEXT,
+            available BOOLEAN,
             dealership_id INTEGER,
-            FOREIGN KEY (dealership_id) REFERENCES dealerships(id))
+            FOREIGN KEY (dealership_id) REFERENCES dealerships(id)
+            );
         """
         CURSOR.execute(sql)
         CONN.commit()
@@ -46,19 +50,20 @@ class Car:
         """ Insert a new row with the attributes of the current Car instance.
         Update object id attribute using the primary key value of new row. """
         sql = """
-            INSERT INTO cars (make, model, year, price, mileage, color, car_type, dealership_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO cars (make, model, year, price, mileage, color, car_type, available, dealership_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
 
-        CURSOR.execute(sql, (self.make, self.model, self.year, self.price, self.mileage, self.color, self.car_type, self.dealership_id))
+        CURSOR.execute(sql, (self.make, self.model, self.year, self.price, self.mileage, self.color, self.car_type, self.available, self.dealership_id))
         CONN.commit()
 
     @classmethod
     def car_from_db(cls, car_row):
-        return cls(car_row[1], car_row[2], car_row[3], car_row[4], car_row[5], car_row[6], car_row[7], car_row[8])
+        return cls(car_row[0], car_row[1], car_row[2], car_row[3], car_row[4], car_row[5], car_row[6], car_row[7], car_row[8], car_row[9])
 
+    
     @classmethod
-    def get_all_cars(cls):
+    def get_all(cls):
         """Return a list containing a Car object per row in the cars table"""
         sql = """
             SELECT * FROM cars
@@ -68,27 +73,27 @@ class Car:
         return [cls.car_from_db(car_row) for car_row in car_data]
     
     
-    @classmethod
-    def car_from_db(cls, car_row):
-        return cls(car_row[0], car_row[1], car_row[2], car_row[3], car_row[4], car_row[5], car_row[6], car_row[7], car_row[8], car_row[9])
+    # @classmethod
+    # def car_from_db(cls, car_row):
+    #     print(car_row)  
+    #     return cls(car_row[0], car_row[1], car_row[2], car_row[3], car_row[4], car_row[5], car_row[6], car_row[7], car_row[8], car_row[9])    
     
-    
-    #method to fetch all cars
-    @classmethod
-    def get_all(cls):
-        car_data = CURSOR.execute("SELECT * FROM cars").fetchall()
-        return [cls.car_from_db(car_row) for car_row in car_data]
+    # #method to fetch all cars
+    # @classmethod
+    # def get_all(cls):
+    #     car_data = CURSOR.execute("SELECT * FROM cars").fetchall()
+    #     return [cls.car_from_db(car_row) for car_row in car_data]
     
     #method to add a car into DB
     @classmethod
-    def add_car(cls, make, model, year, price, mileage, color, available, car_type):
-        CURSOR.execute("INSERT INTO cars (make, model, year, price, mileage, color, available, car_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                   (make, model, year, price, mileage, color, available, car_type))
+    def add_car(cls, make, model, year, price, mileage, color, available, car_type, dealership_id=None):
+        CURSOR.execute("INSERT INTO cars (make, model, year, price, mileage, color, car_type, available, dealership_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                       (make, model, year, price, mileage, color, car_type, available, dealership_id))
         CONN.commit() 
         new_car_id = CURSOR.lastrowid 
-        return cls.car_from_db((new_car_id, make, model, year, price, mileage, color, available, car_type))
-    
-    
+        return cls.car_from_db((new_car_id, make, model, year, price, mileage, color, car_type, available))
+            
+        
     #method to delete a car
     @classmethod
     def delete_car(cls, make, model):
@@ -103,7 +108,7 @@ class Car:
             
     #method to update car
 
-    def update(self, new_make, new_model, new_year, new_price, new_mileage, new_color, new_available, new_car_type):
+    def update(self, new_make, new_model, new_year, new_price, new_mileage, new_color, new_car_type, new_available):
             
         if new_make:
             self.make = new_make
@@ -117,14 +122,14 @@ class Car:
             self.mileage = new_mileage 
         if new_color:
             self.color = new_color 
+        if new_car_type:    
+            self.car_type = new_car_type 
         if new_available is not None:
             new_available_int = 1 if new_available else 0
             self.available = new_available_int 
-        if new_car_type:    
-            self.car_type = new_car_type 
         
-        CURSOR.execute("UPDATE cars SET make = ?, model = ?, year = ?, price = ?, mileage = ?, color = ?, available = ?, car_type = ? WHERE id = ?",
-                    (self.make, self.model, self.year, self.price, self.mileage, self.color, self.available, self.car_type, self.id))
+        CURSOR.execute("UPDATE cars SET make = ?, model = ?, year = ?, price = ?, mileage = ?, color = ?, car_type = ?, available = ? WHERE id = ?",
+                    (self.make, self.model, self.year, self.price, self.mileage, self.color, self.car_type, self.available, self.id))
         CONN.commit()
         
         return self 
@@ -183,7 +188,5 @@ class Car:
     def see_only_sold_cars(cls):
         only_sold =  CURSOR.execute("SELECT * FROM cars WHERE available = 0;").fetchall()
         return [cls.car_from_db(car_row) for car_row in only_sold]
-    
-    
-    
-    
+Car.create_table()
+print("car table created")

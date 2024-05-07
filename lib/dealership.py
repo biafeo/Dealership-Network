@@ -74,9 +74,3 @@ class Dealer:
             CURSOR.execute("UPDATE dealerships SET inventory = ? WHERE id = ?", (count, dealership_id))
 
         CONN.commit()
-        
-
-
-Dealer.create_table()
-
-CONN.commit()
