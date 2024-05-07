@@ -90,18 +90,14 @@ def dealership_menu():
             dealership_open = input("Enter availability (open or closed): ")
             dealership_functions.view_availability(dealership_open)
         elif choice == "3":
-            dealership_functions.sort_cars_price_asc()
+            dealership_functions.sort_dealership_inventory_asc()
         elif choice == "4":
-            dealership_functions.sort_cars_price_des()
+            dealership_functions.sort_dealership_inventory_desc()
         elif choice == "5":
-            dealership_functions.sort_cars_mileage_asc()
+            dealership_functions.sort_dealership_employees_asc()
         elif choice == "6":
-            dealership_functions.sort_cars_mileage_des()
+            dealership_functions.sort_dealership_employees_desc()
         elif choice == "7":
-            dealership_functions.see_only_available_cars()
-        elif choice == "8":
-            dealership_functions.see_only_sold_cars()
-        elif choice == "9":
             main_menu()
         else:
             print("Please enter a valid option:")

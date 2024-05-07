@@ -98,7 +98,50 @@ def sort_dealership_inventory_asc():
     else:
         print("No dealerships found.")
 
-    
+def sort_dealership_inventory_desc():
+    print("View dealerships by inventory descending:")
+    sort_inventory_desc = Dealer.sort_dealership_inventory_desc()
+    if sort_inventory_desc:
+        headers = ["Title", "Location", "Inventory", "Phone Number", "Employees", "Open"]
+        rows = []
+        for dealership in sort_inventory_desc:
+            availability = bool(dealership.available)
+            availability_text = "Available" if availability else "Not Available"
+            row = [dealership.title, dealership.location, dealership.inventory, dealership.phone_number, dealership.employees, dealership.open, availability_text]
+            rows.append(row)
+        print(tabulate(rows, headers=headers, tablefmt="grid"))
+    else:
+        print("No dealerships found.")
+
+def sort_dealership_employees_asc():
+    print("View dealerships by employee count ascending:")
+    sort_employees_asc = Dealer.sort_dealership_employees_asc()
+    if sort_employees_asc:
+        headers = ["Title", "Location", "Inventory", "Phone Number", "Employees", "Open"]
+        rows = []
+        for dealership in sort_employees_asc:
+            availability = bool(dealership.available)
+            availability_text = "Available" if availability else "Not Available"
+            row = [dealership.title, dealership.location, dealership.inventory, dealership.phone_number, dealership.employees, dealership.open, availability_text]
+            rows.append(row)
+        print(tabulate(rows, headers=headers, tablefmt="grid"))
+    else:
+        print("No dealerships found.")
+
+def sort_dealership_employees_desc():
+    print("View dealerships by employee count descending:")
+    sort_employees_desc = Dealer.sort_dealership_employees_desc()
+    if sort_employees_desc:
+        headers = ["Title", "Location", "Inventory", "Phone Number", "Employees", "Open"]
+        rows = []
+        for dealership in sort_employees_desc:
+            availability = bool(dealership.available)
+            availability_text = "Available" if availability else "Not Available"
+            row = [dealership.title, dealership.location, dealership.inventory, dealership.phone_number, dealership.employees, dealership.open, availability_text]
+            rows.append(row)
+        print(tabulate(rows, headers=headers, tablefmt="grid"))
+    else:
+        print("No dealerships found.")
 
 
 
