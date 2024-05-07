@@ -10,6 +10,7 @@ def main_menu():
         print("2. Update car")
         print("3. Delete a car")
         print("4. View Cars")
+        print("5. Dealers Menu")
       
       
         choice = input("Please enter your choice: ")
@@ -22,6 +23,8 @@ def main_menu():
             car_functions.delete_car()
         elif choice == "4":
             view_cars_menu()
+        elif choice == "5":
+            dealership_menu()
         else:
             print("Invalid choice, please select option 1-6.")
             
@@ -64,6 +67,18 @@ def view_cars_menu():
             main_menu()
         else:
             print("Please enter a valid option:")
+            
+            
+def dealership_menu():
+    while True:
+        print("=" * 50)
+        print("View Dealers Menu:")
+        print("=" * 50)
+        print("1. Dealership Inventory")
+        
+        choice = input("Please enter your choice: ")
+        if choice == "1":
+            pass
 
 if __name__ == "__main__":
     main_menu()

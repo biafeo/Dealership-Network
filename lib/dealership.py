@@ -1,17 +1,18 @@
 from __init__ import CURSOR, CONN
 
 class Dealer:
-    def __init__(self, name, location, contact, employees):
-        self.name = name
+    def __init__(self, title, location, inventory, phone_number, employees):
+        self.title = title
         self.location = location
-        self.contact = contact
+        self.inventory = inventory
+        self.phone_number = phone_number
         self.employees = employees
-        self.inventory = []  
+        
     def __str__(self):
-        return f"Dealer Name: {self.name}\nLocation: {self.location}\nContact: {self.contact}\nEmployees: {self.employees}"
+        return f"Dealer Name: {self.title}\nLocation: {self.location}\nContact: {self.phone_number}\nEmployees: {self.employees}\n Inventory: {self.inventory}"
 
 class Car:
-    def __init__(self, id, make, model, year, price, mileage, color, available, car_type):
+    def __init__(self, id, make, model, year, price, mileage, color, available, car_type, dealership_id):
         self.id = id
         self.make = make
         self.model = model
@@ -21,6 +22,7 @@ class Car:
         self.color = color
         self.available = available        
         self.car_type = car_type
+        self.dealership_id = dealership_id
 
     def __str__(self):
         availability = "Available" if self.available else "Not Available"
@@ -30,7 +32,7 @@ class Car:
     
     @classmethod
     def car_from_db(cls, car_row):
-        return cls(car_row[0], car_row[1], car_row[2], car_row[3], car_row[4], car_row[5], car_row[6], car_row[7], car_row[8])
+        return cls(car_row[0], car_row[1], car_row[2], car_row[3], car_row[4], car_row[5], car_row[6], car_row[7], car_row[8], car_row[9])
     
     
     #method to fetch all cars

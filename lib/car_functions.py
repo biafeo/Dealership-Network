@@ -1,5 +1,4 @@
 from dealership import Car
-from __init__ import CURSOR, CONN
 from tabulate import tabulate
 
 
