@@ -138,7 +138,7 @@ class Car:
     def see_only_available_cars(cls):
         only_available = CURSOR.execute("SELECT * FROM cars WHERE available = 1;").fetchall()
         return [cls.car_from_db(car_row) for car_row in only_available]
-  
+
             
     #method only sold cars
     @classmethod

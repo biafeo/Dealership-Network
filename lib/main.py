@@ -1,4 +1,5 @@
 import car_functions
+import dealership_functions
 
 def main_menu():
     while True:
@@ -74,11 +75,33 @@ def dealership_menu():
         print("=" * 50)
         print("View Dealers Menu:")
         print("=" * 50)
-        print("1. Dealership Inventory")
+        print("1. View all Dealerships")
+        print("2. View Dealerships availability")
+        print("3. View Dealerships by inventory count ascending")
+        print("4. View Dealerships by inventory count descending")
+        print("5. View Dealerships by employee count ascending")
+        print("6. View Dealerships by employee count descending ")
+        print("7. Back to main menu")
         
         choice = input("Please enter your choice: ")
         if choice == "1":
-            pass
-
-if __name__ == "__main__":
-    main_menu()
+            dealership_functions.view_all_dealerships()
+        elif choice == "2":
+            dealership_open = input("Enter availability (open or closed): ")
+            dealership_functions.view_availability(dealership_open)
+        elif choice == "3":
+            dealership_functions.sort_cars_price_asc()
+        elif choice == "4":
+            dealership_functions.sort_cars_price_des()
+        elif choice == "5":
+            dealership_functions.sort_cars_mileage_asc()
+        elif choice == "6":
+            dealership_functions.sort_cars_mileage_des()
+        elif choice == "7":
+            dealership_functions.see_only_available_cars()
+        elif choice == "8":
+            dealership_functions.see_only_sold_cars()
+        elif choice == "9":
+            main_menu()
+        else:
+            print("Please enter a valid option:")

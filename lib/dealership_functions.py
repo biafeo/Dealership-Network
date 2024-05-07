@@ -83,6 +83,21 @@ def see_only_open_dealerships():
     else:
         print("No dealerships available")
 
+def sort_dealership_inventory_asc():
+    print("View dealerships by inventory ascending:")
+    sort_inventory_asc = Dealer.sort_dealership_inventory_asc()
+    if sort_inventory_asc:
+        headers = ["Title", "Location", "Inventory", "Phone Number", "Employees", "Open"]
+        rows = []
+        for dealership in sort_inventory_asc:
+            availability = bool(dealership.available)
+            availability_text = "Available" if availability else "Not Available"
+            row = [dealership.title, dealership.location, dealership.inventory, dealership.phone_number, dealership.employees, dealership.open, availability_text]
+            rows.append(row)
+        print(tabulate(rows, headers=headers, tablefmt="grid"))
+    else:
+        print("No dealerships found.")
+
     
 
 
