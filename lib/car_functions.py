@@ -31,8 +31,8 @@ def add_car():
         Car.add_car(make, model, year, price, mileage, color, available, car_type)
         print("Car added successfully!")
     except Exception as e:
-       print("Error:", e)
-       print("Failed to add car. Please try again.")
+        print("Error:", e)
+        print("Failed to add car. Please try again.")
 
         
 def delete_car():
