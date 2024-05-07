@@ -3,7 +3,7 @@ from tabulate import tabulate
 
 def view_all_dealerships():
     print("View All Dealerships:")
-    dealership = Dealer.get_all()
+    dealership = Dealer.get_all_dealers()
     if dealership:
         headers = ["Title", "Location", "Inventory", "Phone Number", "Employees"]
         rows = []
@@ -144,5 +144,3 @@ def sort_dealership_employees_desc():
         print("No dealerships found.")
 
 
-
-#hi2
