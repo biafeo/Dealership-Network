@@ -25,14 +25,15 @@ def add_car():
     price = float(input("Enter car price: "))
     mileage = float(input("Enter car mileage: "))
     color = input("Enter color: ")
-    available = True 
     car_type = input("Enter car type (gas or eletric): ")
+    available = True 
     try:
         Car.add_car(make, model, year, price, mileage, color, car_type, available)
         print("Car added successfully!")
     except Exception as e:
         print("Error:", e)
         print("Failed to add car. Please try again.")
+    
 
         
 def delete_car():
@@ -59,6 +60,7 @@ def update_car():
         new_price = input(f"Enter new price [{car.price}]: ") 
         new_mileage = input(f"Enter new mileage [{car.mileage}]: ") 
         new_color = input(f"Enter new color [{car.color}]: ")
+        new_car_type = input(f"Enter new car type [{car.car_type}]: ") 
         new_available = input(f"Enter availability (True or False): ")
         if new_available.lower() == "true":
             new_available = True
@@ -66,9 +68,8 @@ def update_car():
             new_available = False
         else:
             new_available = car.available
-        new_car_type = input(f"Enter new car type [{car.car_type}]: ") 
         
-        update_car = car.update(new_make, new_model, new_year, new_price, new_mileage, new_color, new_available, new_car_type)
+        update_car = car.update(new_make, new_model, new_year, new_price, new_mileage, new_color, new_car_type, new_available)
         if update_car:
             print("Car updated successfully!")
         else: 

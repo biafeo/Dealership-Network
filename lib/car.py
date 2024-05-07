@@ -72,21 +72,9 @@ class Car:
         car_data = CURSOR.execute(sql).fetchall()
         return [cls.car_from_db(car_row) for car_row in car_data]
     
-    
-    # @classmethod
-    # def car_from_db(cls, car_row):
-    #     print(car_row)  
-    #     return cls(car_row[0], car_row[1], car_row[2], car_row[3], car_row[4], car_row[5], car_row[6], car_row[7], car_row[8], car_row[9])    
-    
-    # #method to fetch all cars
-    # @classmethod
-    # def get_all(cls):
-    #     car_data = CURSOR.execute("SELECT * FROM cars").fetchall()
-    #     return [cls.car_from_db(car_row) for car_row in car_data]
-    
     #method to add a car into DB
     @classmethod
-    def add_car(cls, make, model, year, price, mileage, color, available, car_type, dealership_id=None):
+    def add_car(cls, make, model, year, price, mileage, color, car_type, available, dealership_id=None):
         CURSOR.execute("INSERT INTO cars (make, model, year, price, mileage, color, car_type, available, dealership_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                        (make, model, year, price, mileage, color, car_type, available, dealership_id))
         CONN.commit() 
