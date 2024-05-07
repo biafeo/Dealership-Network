@@ -6,12 +6,12 @@ def view_all_cars():
     print("View All Cars:")
     cars = Car.get_all()
     if cars:
-        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
+        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Car Type", "Availability"]
         rows = []
         for car in cars:
             availability = bool(car.available)
             availability_text = "Available" if availability else "Sold"
-            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, car.car_type, availability_text]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))
     else:
@@ -25,14 +25,15 @@ def add_car():
     price = float(input("Enter car price: "))
     mileage = float(input("Enter car mileage: "))
     color = input("Enter color: ")
-    available = True 
     car_type = input("Enter car type (gas or eletric): ")
+    available = True 
     try:
-        Car.add_car(make, model, year, price, mileage, color, available, car_type)
+        Car.add_car(make, model, year, price, mileage, color, car_type, available)
         print("Car added successfully!")
     except Exception as e:
         print("Error:", e)
         print("Failed to add car. Please try again.")
+    
 
         
 def delete_car():
@@ -59,6 +60,7 @@ def update_car():
         new_price = input(f"Enter new price [{car.price}]: ") 
         new_mileage = input(f"Enter new mileage [{car.mileage}]: ") 
         new_color = input(f"Enter new color [{car.color}]: ")
+        new_car_type = input(f"Enter new car type [{car.car_type}]: ") 
         new_available = input(f"Enter availability (True or False): ")
         if new_available.lower() == "true":
             new_available = True
@@ -66,9 +68,8 @@ def update_car():
             new_available = False
         else:
             new_available = car.available
-        new_car_type = input(f"Enter new car type [{car.car_type}]: ") 
         
-        update_car = car.update(new_make, new_model, new_year, new_price, new_mileage, new_color, new_available, new_car_type)
+        update_car = car.update(new_make, new_model, new_year, new_price, new_mileage, new_color, new_car_type, new_available)
         if update_car:
             print("Car updated successfully!")
         else: 
@@ -81,12 +82,12 @@ def view_cars_by_type(car_type):
     print("View Cars by Type:")
     filtered_cars = Car.view_cars_by_type(car_type)
     if filtered_cars:
-        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
+        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Car Type", "Availability"]
         rows = []
         for car in filtered_cars:
             availability = bool(car.available)
             availability_text = "Available" if availability else "Not Available"
-            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, car.car_type, availability_text]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))
     else:
@@ -97,12 +98,12 @@ def sort_cars_price_asc():
     print("view cars by price ascending:")
     sort_price_asc = Car.sort_cars_price_asc()
     if sort_price_asc:
-        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
+        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Car Type", "Availability"]
         rows = []
         for car in sort_price_asc:
             availability = bool(car.available)
             availability_text = "Available" if availability else "Not Available"
-            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, car.car_type, availability_text]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))
     else:
@@ -112,12 +113,12 @@ def sort_cars_price_des():
     print("view cars by price descending:")
     sort_price_desc = Car.sort_cars_price_des()
     if sort_price_desc:
-        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
+        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Car Type", "Availability"]
         rows = []
         for car in sort_price_desc:
             availability = bool(car.available)
             availability_text = "Available" if availability else "Not Available"
-            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, car.car_type, availability_text]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))
             
@@ -130,12 +131,12 @@ def sort_cars_mileage_asc():
     print("view cars by mileage ascending:")
     sort_mileage_asc = Car.sort_cars_mileage_asc()
     if sort_mileage_asc:
-        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
+        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Car Type",  "Availability"]
         rows = []
         for car in sort_mileage_asc:
             availability = bool(car.available)
             availability_text = "Available" if availability else "Not Available"
-            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, car.car_type, availability_text]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))
     else:
@@ -146,12 +147,12 @@ def sort_cars_mileage_des():
     print("view cars by mileage descending:")
     sort_mileage_desc = Car.sort_cars_mileage_des()
     if sort_mileage_desc:
-        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
+        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Car Type", "Availability"]
         rows = []
         for car in sort_mileage_desc:
             availability = bool(car.available)
             availability_text = "Available" if availability else "Not Available"
-            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, car.car_type, availability_text]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))
     else:
@@ -164,12 +165,12 @@ def see_only_available_cars():
     print("view cars that are available:")
     only_available = Car.see_only_available_cars()
     if only_available:
-        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
+        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Car Type", "Availability"]
         rows = []
         for car in only_available:
             availability = bool(car.available)
             availability_text = "Available" if availability else "Not Available"
-            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, car.car_type, availability_text]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))
     else:
@@ -181,12 +182,12 @@ def see_only_sold_cars():
     print("view cars that are sold:")
     only_sold = Car.see_only_sold_cars()
     if only_sold:
-        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Availability", "Car Type"]
+        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Car Type", "Availability"]
         rows = []
         for car in only_sold:
             availability = bool(car.available)
             availability_text = "Available" if availability else "Sold"
-            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, availability_text, car.car_type]
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, car.car_type, availability_text]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))
     else:
