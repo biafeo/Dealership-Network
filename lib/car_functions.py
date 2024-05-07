@@ -1,4 +1,4 @@
-from dealership import Car
+from car import Car
 from tabulate import tabulate
 
 
