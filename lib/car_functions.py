@@ -46,7 +46,7 @@ def add_car():
     price = float(input("Enter car price: "))
     mileage = float(input("Enter car mileage: "))
     color = input("Enter color: ")
-    car_type = input("Enter car type (gas or eletric): ")
+    car_type = input("Enter car type (Gas or Electric): ")
     available = True 
     try:
         Car.add_car(make, model, year, price, mileage, color, car_type, available)
@@ -111,7 +111,7 @@ def view_cars_by_type(car_type):
         rows = []
         for car in filtered_cars:
             availability = bool(car.available)
-            availability_text = "Available" if availability else "Not Available"
+            availability_text = "Available" if availability else "Sold"
             row = [car.make, car.model, car.year, car.price, car.mileage, car.color, car.car_type, availability_text]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))
@@ -127,7 +127,7 @@ def sort_cars_price_asc():
         rows = []
         for car in sort_price_asc:
             availability = bool(car.available)
-            availability_text = "Available" if availability else "Not Available"
+            availability_text = "Available" if availability else "Sold"
             row = [car.make, car.model, car.year, car.price, car.mileage, car.color, car.car_type, availability_text]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))
@@ -142,7 +142,7 @@ def sort_cars_price_des():
         rows = []
         for car in sort_price_desc:
             availability = bool(car.available)
-            availability_text = "Available" if availability else "Not Available"
+            availability_text = "Available" if availability else "Sold"
             row = [car.make, car.model, car.year, car.price, car.mileage, car.color, car.car_type, availability_text]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))
@@ -160,7 +160,7 @@ def sort_cars_mileage_asc():
         rows = []
         for car in sort_mileage_asc:
             availability = bool(car.available)
-            availability_text = "Available" if availability else "Not Available"
+            availability_text = "Available" if availability else "Sold"
             row = [car.make, car.model, car.year, car.price, car.mileage, car.color, car.car_type, availability_text]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))
@@ -176,7 +176,7 @@ def sort_cars_mileage_des():
         rows = []
         for car in sort_mileage_desc:
             availability = bool(car.available)
-            availability_text = "Available" if availability else "Not Available"
+            availability_text = "Available" if availability else "Sold"
             row = [car.make, car.model, car.year, car.price, car.mileage, car.color, car.car_type, availability_text]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))
@@ -194,7 +194,7 @@ def see_only_available_cars():
         rows = []
         for car in only_available:
             availability = bool(car.available)
-            availability_text = "Available" if availability else "Not Available"
+            availability_text = "Available" if availability else "Sold"
             row = [car.make, car.model, car.year, car.price, car.mileage, car.color, car.car_type, availability_text]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))

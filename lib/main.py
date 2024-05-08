@@ -61,7 +61,7 @@ def view_cars_menu():
         elif choice == "2":
             car_functions.display_location()
         elif choice == "3":
-            car_type = input("Enter car type (Eletric or Gas): ")
+            car_type = input("Enter car type (Electric or Gas): ")
             car_functions.view_cars_by_type(car_type)
         elif choice == "4":
             car_functions.sort_cars_price_asc()
