@@ -4,13 +4,13 @@ from car import Car
 class Dealer:
     all = {}
     
-    def __init__(self, id, title, location, phone_number, employees):
+    def __init__(self, id, title, location, phone_number, employees, inventory):
         self.id = id
         self.title = title
         self.location = location
         self.phone_number = phone_number
         self.employees = employees
-        self.inventory = 0
+        self.inventory = inventory
         
 
     def __str__(self):
@@ -98,7 +98,7 @@ class Dealer:
 
         dealers = []
         for result in results:
-            dealer = cls(result[0], result[1], result[2], result[3], result[4])
+            dealer = cls(result[0], result[1], result[2], result[3], result[4], result [5])
             dealers.append(dealer)
 
         return dealers
