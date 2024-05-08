@@ -61,6 +61,7 @@ class Car:
     def car_from_db(cls, car_row):
         return cls(car_row[0], car_row[1], car_row[2], car_row[3], car_row[4], car_row[5], car_row[6], car_row[7], car_row[8], car_row[9])
 
+    #method to select all rows from cars
     
     @classmethod
     def get_all(cls):
@@ -71,7 +72,19 @@ class Car:
 
         car_data = CURSOR.execute(sql).fetchall()
         return [cls.car_from_db(car_row) for car_row in car_data]
+       
+       
+       
+    #method to add a car into DB
     
+    @classmethod
+    def add_car(cls, make, model, year, price, mileage, color, car_type, available, dealership_id=None):
+        CURSOR.execute("INSERT INTO cars (make, model, year, price, mileage, color, car_type, available, dealership_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                       (make, model, year, price, mileage, color, car_type, available, dealership_id))
+        CONN.commit() 
+        new_car_id = CURSOR.lastrowid 
+        return cls.car_from_db((new_car_id, make, model, year, price, mileage, color, car_type, available, dealership_id))
+            
                 
     #method to update car
 
@@ -103,28 +116,16 @@ class Car:
         CONN.commit()
         
         return self 
-        
+    
+    
+    #method used to select the row cars that matched the make and model (used in update car and display dealership)
     @classmethod
     def find_by_make_and_model(cls, make, model):
         data = CURSOR.execute("SELECT * FROM cars WHERE make = ? AND model = ?", (make, model)).fetchone()
         if data:
             return cls.car_from_db(data)
         
-        
-    
-    
-    
-    
-    #method to add a car into DB
-    @classmethod
-    def add_car(cls, make, model, year, price, mileage, color, car_type, available, dealership_id=None):
-        CURSOR.execute("INSERT INTO cars (make, model, year, price, mileage, color, car_type, available, dealership_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                       (make, model, year, price, mileage, color, car_type, available, dealership_id))
-        CONN.commit() 
-        new_car_id = CURSOR.lastrowid 
-        return cls.car_from_db((new_car_id, make, model, year, price, mileage, color, car_type, available, dealership_id))
-            
-        
+   
     #method to delete a car
     @classmethod
     def delete_car(cls, make, model):
@@ -135,15 +136,9 @@ class Car:
             print("Car deleted sucessfully!")
         else:
             print("No car found to delete")
-            
-
-        
-        
-
     
     
     #method to view car by type
-
     @classmethod
     def view_cars_by_type(cls, car_type):
         filtered_cars = CURSOR.execute("SELECT * FROM cars WHERE car_type = ?", (car_type,)).fetchall()
@@ -155,7 +150,6 @@ class Car:
         sort_price_asc = CURSOR.execute("SELECT * FROM cars ORDER BY price ASC;").fetchall()
         return [cls.car_from_db(car_row) for car_row in sort_price_asc]
 
-  
     #method to sort price by desc
     @classmethod
     def sort_cars_price_des(cls):
@@ -174,8 +168,6 @@ class Car:
     def sort_cars_mileage_des(cls):
         sort_mileage_desc = CURSOR.execute("SELECT * FROM cars ORDER BY cars.mileage DESC;").fetchall()
         return [cls.car_from_db(car_row) for car_row in sort_mileage_desc]
-
-    
     
     #method only available cars
     @classmethod

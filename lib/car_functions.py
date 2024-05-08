@@ -2,7 +2,7 @@ from car import Car
 from tabulate import tabulate
 from dealership import Dealer
 
-
+# display all cars table
 def view_all_cars():
     print("View All Cars:")
     cars = Car.get_all()
@@ -17,28 +17,8 @@ def view_all_cars():
         print(tabulate(rows, headers=headers, tablefmt="grid"))
     else:
         print("No cars found.")
-
-
-def display_location():
-    print("find the dealership:")
-    make = input("Enter car make: ")
-    model = input("Enter car model: ")
-    car = Car.find_by_make_and_model(make, model)
-    
-    if car:
-        dealership_id = car.dealership_id  
-        dealership = Dealer.find_by_id(dealership_id)
-        if dealership:
-            headers = ["Title", "Location", "Phone Number", "Employees", "Inventory"]
-            row = [dealership.title, dealership.location, dealership.phone_number, dealership.employees, dealership.inventory]
-            print(tabulate([row], headers=headers, tablefmt="grid"))
-        else:
-            print("No dealership found.")
-    else:
-        print("Car not found.")
-
-
         
+#add cars
 def add_car():
     make = input("Enter car make: ")
     model = input("Enter car model: ")
@@ -54,7 +34,8 @@ def add_car():
     except Exception as e:
         print("Error:", e)
         print("Failed to add car. Please try again.")
-    
+        
+#updated a car
 def update_car():
     print("Update car:")
     make = input("Enter car make: ")
@@ -90,19 +71,38 @@ def update_car():
             print("Failed to update car")
     else:
         print("No car found with the given make and model.")
-        
-        
+
+#delete an existing car        
 def delete_car():
     print("Delete Car:")
     make = input("Enter car make: ")
     model = input("Enter car model: ")
     Car.delete_car(make, model)
     Dealer.update_inventory()
+     
+     
+     
+#display which dealership contain that car   
+def display_location():
+    print("find the dealership:")
+    make = input("Enter car make: ")
+    model = input("Enter car model: ")
+    car = Car.find_by_make_and_model(make, model)
     
-    
+    if car:
+        dealership_id = car.dealership_id  
+        dealership = Dealer.find_by_id(dealership_id)
+        if dealership:
+            headers = ["Title", "Location", "Phone Number", "Employees", "Inventory"]
+            row = [dealership.title, dealership.location, dealership.phone_number, dealership.employees, dealership.inventory]
+            print(tabulate([row], headers=headers, tablefmt="grid"))
+        else:
+            print("No dealership found.")
+    else:
+        print("Car not found.")
 
-        
-
+      
+#display cars by type table
 def view_cars_by_type(car_type):
     print("View Cars by Type:")
     filtered_cars = Car.view_cars_by_type(car_type)
@@ -118,7 +118,7 @@ def view_cars_by_type(car_type):
     else:
         print("No cars of this type found.")
                     
- 
+ #sort price by asc price
 def sort_cars_price_asc():
     print("view cars by price ascending:")
     sort_price_asc = Car.sort_cars_price_asc()
@@ -133,7 +133,9 @@ def sort_cars_price_asc():
         print(tabulate(rows, headers=headers, tablefmt="grid"))
     else:
         print("No cars found.")
-   
+        
+        
+#sort cars by desc price  
 def sort_cars_price_des():
     print("view cars by price descending:")
     sort_price_desc = Car.sort_cars_price_des()
@@ -151,7 +153,7 @@ def sort_cars_price_des():
         print("No cars found.")
             
        
-            
+ #sort price by asc mileage        
 def sort_cars_mileage_asc():
     print("view cars by mileage ascending:")
     sort_mileage_asc = Car.sort_cars_mileage_asc()
@@ -167,7 +169,7 @@ def sort_cars_mileage_asc():
     else:
         print("No cars found.")
 
-  
+#sort price by desc mileage  
 def sort_cars_mileage_des():
     print("view cars by mileage descending:")
     sort_mileage_desc = Car.sort_cars_mileage_des()
@@ -185,7 +187,7 @@ def sort_cars_mileage_des():
 
 
 
-
+#only display available cars
 def see_only_available_cars():
     print("view cars that are available:")
     only_available = Car.see_only_available_cars()
@@ -202,7 +204,7 @@ def see_only_available_cars():
         print("No cars available")
 
 
-
+#only display sold cars
 def see_only_sold_cars():
     print("view cars that are sold:")
     only_sold = Car.see_only_sold_cars()

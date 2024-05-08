@@ -110,10 +110,8 @@ class Dealer:
         car_data = CURSOR.fetchall()
 
         return car_data
-        
     
     
-
     @classmethod
     def get_all_dealers(cls):
         """Return a list of all Dealer objects"""
@@ -129,9 +127,6 @@ class Dealer:
             dealers.append(dealer)
 
         return dealers
-
-
-        
 
     def update(self, new_title, new_location, new_phone_number, new_employees):
             
@@ -171,23 +166,3 @@ class Dealer:
     def sort_dealership_employees_desc(cls):
         sort_employees_desc = CURSOR.execute("SELECT * FROM dealerships ORDER BY dealerships.employees DESC;").fetchall()
         return [cls.dealership_from_db(dealership_row) for dealership_row in sort_employees_desc]
-
-
-    
-    # @classmethod
-    # def add_dealership(cls, title, location, phone_number, employees, inventory):
-    #     CURSOR.execute("INSERT INTO dealerships (title, location, phone number, employees, inventory) VALUES (?, ?, ?, ?, ?)",
-    #                 (title, location, phone_number, employees, inventory))
-    #     CONN.commit() 
-    #     new_dealership_id = CURSOR.lastrowid 
-    #     return cls.dealership_from_db((new_dealership_id, title, location, phone_number, employees, inventory))
-    
-    # @classmethod
-    # def delete_dealership(cls, title, location):
-    #     CURSOR.execute("DELETE FROM dealerships WHERE title = ? AND location = ?", (title, location))
-    #     CONN.commit()
-        
-    #     if CURSOR.rowcount > 0:
-    #         print("Dealership deleted!")
-    #     else:
-    #         print("No dealerships found to delete")
