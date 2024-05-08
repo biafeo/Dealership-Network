@@ -120,24 +120,3 @@ def sort_dealership_employees_desc():
         print(tabulate(rows, headers=headers, tablefmt="grid"))
     else:
         print("No dealerships found.")
-
-
-# def add_dealership():
-#     title = input("Enter car make: ")
-#     location = input("Enter car model: ")
-#     inventory = int(input("Enter car year: "))
-#     phone_number = float(input("Enter car price: "))
-#     employees = float(input("Enter car mileage: "))
-#     open = True 
-#     try:
-#         Dealer.add_dealership(title, location, inventory, phone_number, employees, open)
-#         print("Dealership has added!")
-#     except Exception as e:
-#         print("Error:", e)
-#         print("Please try again. Failed to add dealership.")
-
-# def delete_dealership():
-#     print("Delete Dealership:")
-#     title = input("Enter name of the dealership: ")
-#     location = input("Enter dealership location: ")
-#     Dealer.delete_dealership(title, location)
