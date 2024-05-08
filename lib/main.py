@@ -78,7 +78,7 @@ def dealership_menu():
         print("View Dealers Menu:")
         print("=" * 50)
         print("1. View all Dealerships")
-        print("2. View Dealerships availability")
+        print("2. Update Dealerships data")
         print("3. View Dealerships by inventory count ascending")
         print("4. View Dealerships by inventory count descending")
         print("5. View Dealerships by employee count ascending")
@@ -89,8 +89,7 @@ def dealership_menu():
         if choice == "1":
             dealership_functions.view_all_dealerships()
         elif choice == "2":
-            dealership_open = input("Enter availability (open or closed): ")
-            dealership_functions.view_availability(dealership_open)
+            dealership_functions.update_dealership()
         elif choice == "3":
             dealership_functions.sort_dealership_inventory_asc()
         elif choice == "4":
