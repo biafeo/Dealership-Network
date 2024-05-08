@@ -8,7 +8,7 @@ def view_all_dealerships():
     print("View All Dealerships:")
     dealerships = Dealer.get_all_dealers()
     if dealerships:
-        headers = ["", "Title", "Location", "Phone Number", "Employees", "Inventory"]
+        headers = ["", "Title", "Location", "Phone Number", "Employees", "Inventory", "Available"]
         rows = []
         for dealership in dealerships:
             row = [dealership.id, dealership.title, dealership.location, dealership.phone_number, dealership.employees, dealership.inventory]
