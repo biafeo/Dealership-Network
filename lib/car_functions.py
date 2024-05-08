@@ -1,5 +1,6 @@
 from car import Car
 from tabulate import tabulate
+from dealership import Dealer
 
 
 def view_all_cars():
@@ -16,7 +17,27 @@ def view_all_cars():
         print(tabulate(rows, headers=headers, tablefmt="grid"))
     else:
         print("No cars found.")
-        
+
+
+def display_location():
+    print("find the dealership:")
+    make = input("Enter car make: ")
+    model = input("Enter car model: ")
+    car = Car.find_by_make_and_model(make, model)
+    
+    if car:
+        dealership_id = car.dealership_id  
+        dealership = Dealer.find_by_id(dealership_id)
+        if dealership:
+            headers = ["Title", "Location", "Phone Number", "Employees", "Inventory"]
+            row = [dealership.title, dealership.location, dealership.phone_number, dealership.employees, dealership.inventory]
+            print(tabulate([row], headers=headers, tablefmt="grid"))
+        else:
+            print("No dealership found.")
+    else:
+        print("Car not found.")
+
+
         
 def add_car():
     make = input("Enter car make: ")
@@ -68,15 +89,15 @@ def update_car():
             new_available = False
         else:
             new_available = car.available
-        
-        update_car = car.update(new_make, new_model, new_year, new_price, new_mileage, new_color, new_car_type, new_available)
+        new_dealership_id = input(f"Enter the new dealership id[{car.dealership_id}]:")
+        update_car = car.update(new_make, new_model, new_year, new_price, new_mileage, new_color, new_car_type, new_available, new_dealership_id)
         if update_car:
             print("Car updated successfully!")
         else: 
             print("Failed to update car")
     else:
         print("No car found with the given make and model.")
-
+        
 
 def view_cars_by_type(car_type):
     print("View Cars by Type:")
