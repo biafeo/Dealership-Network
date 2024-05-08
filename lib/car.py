@@ -1,5 +1,5 @@
 from __init__ import CONN, CURSOR
-        
+
 class Car:
     def __init__(self, id, make, model, year, price, mileage, color, car_type, available, dealership_id=None):
         self.id = id
@@ -96,7 +96,7 @@ class Car:
             
     #method to update car
 
-    def update(self, new_make, new_model, new_year, new_price, new_mileage, new_color, new_car_type, new_available):
+    def update(self, new_make, new_model, new_year, new_price, new_mileage, new_color, new_car_type, new_available, new_dealership_id):
             
         if new_make:
             self.make = new_make
@@ -115,9 +115,12 @@ class Car:
         if new_available is not None:
             new_available_int = 1 if new_available else 0
             self.available = new_available_int 
+        if new_dealership_id:
+            self.dealership_id = new_dealership_id
         
-        CURSOR.execute("UPDATE cars SET make = ?, model = ?, year = ?, price = ?, mileage = ?, color = ?, car_type = ?, available = ? WHERE id = ?",
-                    (self.make, self.model, self.year, self.price, self.mileage, self.color, self.car_type, self.available, self.id))
+        
+        CURSOR.execute("UPDATE cars SET make = ?, model = ?, year = ?, price = ?, mileage = ?, color = ?, car_type = ?, available = ?, dealership_id = ? WHERE id = ?",
+                (self.make, self.model, self.year, self.price, self.mileage, self.color, self.car_type, self.available, self.dealership_id, self.id))
         CONN.commit()
         
         return self 
@@ -129,6 +132,11 @@ class Car:
             return cls.car_from_db(data)
         
         
+        
+        
+
+    
+    
     #method to view car by type
 
     @classmethod

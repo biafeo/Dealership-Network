@@ -39,7 +39,7 @@ def display_inventory(car_data):
         rows = []
         for car_row in car_data:
             car = Car.car_from_db(car_row)
-            availability_text = "Yes" if car.available else "No"
+            availability_text = "Available" if car.available else "Sold"
             row = [car.make, car.model, car.year, car.price, car.mileage, car.color, car.car_type, availability_text]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))

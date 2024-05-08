@@ -1,5 +1,4 @@
 from __init__ import CURSOR, CONN
-from car import Car
 
 class Dealer:
     all = {}
@@ -51,6 +50,24 @@ class Dealer:
         CURSOR.execute(sql, (self.title, self.location, self.phone_number, self.employees))
         CONN.commit()
         
+        
+    @classmethod
+    def dealer_from_db(cls, dealer_row):
+        return cls(dealer_row[0], dealer_row[1], dealer_row[2], dealer_row[3], dealer_row[4], dealer_row[5])
+    
+    @classmethod
+    def find_by_id(cls, dealer_id):
+        """Find a dealership by its ID"""
+        sql = """
+            SELECT * FROM dealerships WHERE id = ?
+        """
+        CURSOR.execute(sql, (dealer_id,))
+        dealer_data = CURSOR.fetchone()
+        if dealer_data:
+            return cls.dealer_from_db(dealer_data)
+        else:
+            return None
+   
  #inventory display the amount of cars in inventory cell
  
     @classmethod
@@ -83,9 +100,6 @@ class Dealer:
         
     
     
-    @classmethod
-    def dealer_from_db(cls, dealer_row):
-        return cls(dealer_row[1], dealer_row[2], dealer_row[3], dealer_row[4], dealer_row[5])
 
     @classmethod
     def get_all_dealers(cls):
