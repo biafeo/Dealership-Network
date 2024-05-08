@@ -72,28 +72,7 @@ class Car:
         car_data = CURSOR.execute(sql).fetchall()
         return [cls.car_from_db(car_row) for car_row in car_data]
     
-    #method to add a car into DB
-    @classmethod
-    def add_car(cls, make, model, year, price, mileage, color, car_type, available, dealership_id=None):
-        CURSOR.execute("INSERT INTO cars (make, model, year, price, mileage, color, car_type, available, dealership_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                       (make, model, year, price, mileage, color, car_type, available, dealership_id))
-        CONN.commit() 
-        new_car_id = CURSOR.lastrowid 
-        return cls.car_from_db((new_car_id, make, model, year, price, mileage, color, car_type, available))
-            
-        
-    #method to delete a car
-    @classmethod
-    def delete_car(cls, make, model):
-        CURSOR.execute("DELETE FROM cars WHERE make = ? AND model = ?", (make, model))
-        CONN.commit()
-        
-        if CURSOR.rowcount > 0:
-            print("Car deleted sucessfully!")
-        else:
-            print("No car found to delete")
-            
-            
+                
     #method to update car
 
     def update(self, new_make, new_model, new_year, new_price, new_mileage, new_color, new_car_type, new_available, new_dealership_id):
@@ -132,6 +111,32 @@ class Car:
             return cls.car_from_db(data)
         
         
+    
+    
+    
+    
+    #method to add a car into DB
+    @classmethod
+    def add_car(cls, make, model, year, price, mileage, color, car_type, available, dealership_id=None):
+        CURSOR.execute("INSERT INTO cars (make, model, year, price, mileage, color, car_type, available, dealership_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                       (make, model, year, price, mileage, color, car_type, available, dealership_id))
+        CONN.commit() 
+        new_car_id = CURSOR.lastrowid 
+        return cls.car_from_db((new_car_id, make, model, year, price, mileage, color, car_type, available, dealership_id))
+            
+        
+    #method to delete a car
+    @classmethod
+    def delete_car(cls, make, model):
+        CURSOR.execute("DELETE FROM cars WHERE make = ? AND model = ?", (make, model))
+        CONN.commit()
+        
+        if CURSOR.rowcount > 0:
+            print("Car deleted sucessfully!")
+        else:
+            print("No car found to delete")
+            
+
         
         
 

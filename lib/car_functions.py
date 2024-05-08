@@ -55,15 +55,6 @@ def add_car():
         print("Error:", e)
         print("Failed to add car. Please try again.")
     
-
-        
-def delete_car():
-    print("Delete Car:")
-    make = input("Enter car make: ")
-    model = input("Enter car model: ")
-    Car.delete_car(make, model)
-    
-    
 def update_car():
     print("Update car:")
     make = input("Enter car make: ")
@@ -88,15 +79,28 @@ def update_car():
         elif new_available.lower() == "false":
             new_available = False
         else:
-            new_available = car.available
+            new_available = car.available   
         new_dealership_id = input(f"Enter the new dealership id[{car.dealership_id}]:")
+        
         update_car = car.update(new_make, new_model, new_year, new_price, new_mileage, new_color, new_car_type, new_available, new_dealership_id)
         if update_car:
             print("Car updated successfully!")
+            Dealer.update_inventory()
         else: 
             print("Failed to update car")
     else:
         print("No car found with the given make and model.")
+        
+        
+def delete_car():
+    print("Delete Car:")
+    make = input("Enter car make: ")
+    model = input("Enter car model: ")
+    Car.delete_car(make, model)
+    Dealer.update_inventory()
+    
+    
+
         
 
 def view_cars_by_type(car_type):

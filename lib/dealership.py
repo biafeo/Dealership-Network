@@ -83,14 +83,16 @@ class Dealer:
                 UPDATE dealerships 
                 SET inventory = (
                     SELECT COUNT(*) 
-                    FROM dealerships 
-                    WHERE dealerships.dealership_id = dealerships.id
+                    FROM cars 
+                    WHERE cars.dealership_id = dealerships.id
                 )
             """)
             CONN.commit()
+            print("Inventory updated successfully.")
         except Exception as e:
             CONN.rollback()
-
+            print("Error updating inventory:", e)
+            
     @classmethod
     def find_by_title(cls, title):
         data = CURSOR.execute("SELECT * FROM dealerships WHERE title = ?", (title,)).fetchone()
@@ -127,33 +129,11 @@ class Dealer:
             dealers.append(dealer)
 
         return dealers
-    
-    @classmethod
-    def add_dealership(cls, title, location, phone_number, employees, inventory):
-        CURSOR.execute("INSERT INTO dealerships (title, location, phone number, employees, inventory) VALUES (?, ?, ?, ?, ?)",
-                    (title, location, phone_number, employees, inventory))
-        CONN.commit() 
-        new_dealership_id = CURSOR.lastrowid 
-        return cls.dealership_from_db((new_dealership_id, title, location, phone_number, employees, inventory))
-    
-    @classmethod
-    def delete_dealership(cls, title, location):
-        CURSOR.execute("DELETE FROM dealerships WHERE title = ? AND location = ?", (title, location))
-        CONN.commit()
-        
-        if CURSOR.rowcount > 0:
-            print("Dealership deleted!")
-        else:
-            print("No dealerships found to delete")
 
-    # @classmethod
-    # def find_by_title(cls, title, location):
-    #     data = CURSOR.execute("SELECT * FROM dealerships WHERE title = ?", (title, location)).fetchone()
-    #     if data:
-    #         return cls.dealer_from_db(data)
+
         
 
-    def update(self, new_title, new_location, new_phone_number, new_employees, new_inventory):
+    def update(self, new_title, new_location, new_phone_number, new_employees):
             
         if new_title:
             self.title = new_title
@@ -163,12 +143,11 @@ class Dealer:
             self.phone_number = new_phone_number
         if new_employees:
             self.employees = new_employees
-        if new_inventory:
-            self.inventory = new_inventory
+
     
         
-        CURSOR.execute("UPDATE dealerships SET title = ?, location = ?, phone number = ?, employees = ?, inventory = ?, WHERE id = ?",
-                    (self.title, self.location, self.phone_number, self.employees, self.inventory, self.id))
+        CURSOR.execute("UPDATE dealerships SET title = ?, location = ?, phone_number = ?, employees = ? WHERE id = ?",
+                    (self.title, self.location, self.phone_number, self.employees, self.id))
         CONN.commit()
         
         return self 
@@ -193,19 +172,22 @@ class Dealer:
         sort_employees_desc = CURSOR.execute("SELECT * FROM dealerships ORDER BY dealerships.employees DESC;").fetchall()
         return [cls.dealership_from_db(dealership_row) for dealership_row in sort_employees_desc]
 
-    # @classmethod
-    # def see_only_available_dealerships(cls):
-    #     only_available = CURSOR.execute("SELECT * FROM dealerships WHERE available = 1;").fetchall()
-    #     return [cls.dealership_from_db_from_db(dealership_row) for dealership_row in only_available]
 
+    
     # @classmethod
-    # def update_inventory(cls):
-    #     """Update the inventory column of each dealership with the count of cars associated with it"""
-    #     dealerships = CURSOR.execute("SELECT id FROM dealerships").fetchall()
-    #     for dealership in dealerships:
-    #         dealership_id = dealership[0]
-    #         count_query = CURSOR.execute("SELECT COUNT(*) FROM cars WHERE dealership_id = ?", (dealership_id,))
-    #         count = count_query.fetchone()[0]
-    #         CURSOR.execute("UPDATE dealerships SET inventory = ? WHERE id = ?", (count, dealership_id))
-
+    # def add_dealership(cls, title, location, phone_number, employees, inventory):
+    #     CURSOR.execute("INSERT INTO dealerships (title, location, phone number, employees, inventory) VALUES (?, ?, ?, ?, ?)",
+    #                 (title, location, phone_number, employees, inventory))
+    #     CONN.commit() 
+    #     new_dealership_id = CURSOR.lastrowid 
+    #     return cls.dealership_from_db((new_dealership_id, title, location, phone_number, employees, inventory))
+    
+    # @classmethod
+    # def delete_dealership(cls, title, location):
+    #     CURSOR.execute("DELETE FROM dealerships WHERE title = ? AND location = ?", (title, location))
     #     CONN.commit()
+        
+    #     if CURSOR.rowcount > 0:
+    #         print("Dealership deleted!")
+    #     else:
+    #         print("No dealerships found to delete")
