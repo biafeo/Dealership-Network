@@ -47,45 +47,20 @@ def display_inventory(car_data):
         print("No cars found in inventory for the selected dealership.")
         
         
-def add_dealership():
-    title = input("Enter car make: ")
-    location = input("Enter car model: ")
-    inventory = int(input("Enter car year: "))
-    phone_number = float(input("Enter car price: "))
-    employees = float(input("Enter car mileage: "))
-    open = True 
-    try:
-        Dealer.add_dealership(title, location, inventory, phone_number, employees, open)
-        print("Dealership has added!")
-    except Exception as e:
-        print("Error:", e)
-        print("Please try again. Failed to add dealership.")
-
-def delete_dealership():
-    print("Delete Dealership:")
-    title = input("Enter name of the dealership: ")
-    location = input("Enter dealership location: ")
-    Dealer.delete_dealership(title, location)
-
 def update_dealership():
     print("Update Dealership:")
     title = input("Enter name of the dealership: ")
     dealership = Dealer.find_by_title(title)
-    
-    
-    
-    
-    
+
     if dealership:
         print("Enter each of the inputs in order to update")
 
         new_title = input(f"Enter new title [{dealership.title}]: ")
         new_location = input(f"Enter new location [{dealership.location}]: ")
-        new_inventory = input(f"Enter new inventory count [{dealership.inventory}]: ") 
         new_phone_number = input(f"Enter new phone number [{dealership.phone_number}]: ") 
-        new_employees = input(f"Enter new employee count [{dealership.employees}]: ") 
+        new_employees = input(f"Enter new employee count [{dealership.employees}]: ")  
         
-        update_dealership = dealership.update(new_title, new_location, new_inventory, new_phone_number, new_employees)
+        update_dealership = dealership.update(new_title, new_location, new_phone_number, new_employees)
         if update_dealership:
             print("Dealership updated successfully!")
         else: 
@@ -147,3 +122,22 @@ def sort_dealership_employees_desc():
         print("No dealerships found.")
 
 
+# def add_dealership():
+#     title = input("Enter car make: ")
+#     location = input("Enter car model: ")
+#     inventory = int(input("Enter car year: "))
+#     phone_number = float(input("Enter car price: "))
+#     employees = float(input("Enter car mileage: "))
+#     open = True 
+#     try:
+#         Dealer.add_dealership(title, location, inventory, phone_number, employees, open)
+#         print("Dealership has added!")
+#     except Exception as e:
+#         print("Error:", e)
+#         print("Please try again. Failed to add dealership.")
+
+# def delete_dealership():
+#     print("Delete Dealership:")
+#     title = input("Enter name of the dealership: ")
+#     location = input("Enter dealership location: ")
+#     Dealer.delete_dealership(title, location)

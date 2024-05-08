@@ -4,6 +4,7 @@ import car_functions
 
 
 def main_menu():
+    
     while True:
         print("=" * 50)
         print("Welcome to the Dealership System!")
@@ -14,6 +15,7 @@ def main_menu():
         print("3. Delete a car")
         print("4. View Cars")
         print("5. Dealers Menu")
+        print("6. Exit")
       
       
         choice = input("Please enter your choice: ")
@@ -21,16 +23,20 @@ def main_menu():
         if choice == "1":
             car_functions.add_car()
         elif choice == "2":
-            car_functions.display_location()
+            car_functions.update_car()
         elif choice == "3":
             car_functions.delete_car()
         elif choice == "4":
             view_cars_menu()
         elif choice == "5":
             dealership_menu()
+        elif choice == "6":
+            print("Exiting the program...")
+            break
         else:
-            print("Invalid choice, please select option:")
-            
+            print("Invalid choice, please select an option:")
+
+                
             
             
 def view_cars_menu():
@@ -55,7 +61,7 @@ def view_cars_menu():
         elif choice == "2":
             car_functions.display_location()
         elif choice == "3":
-            car_type = input("Enter car type (eletric or gas): ")
+            car_type = input("Enter car type (Eletric or Gas): ")
             car_functions.view_cars_by_type(car_type)
         elif choice == "4":
             car_functions.sort_cars_price_asc()
@@ -70,7 +76,7 @@ def view_cars_menu():
         elif choice == "9":
             car_functions.see_only_sold_cars()
         elif choice == "10":
-            main_menu()
+            break
         else:
             print("Please enter a valid option:")
             
@@ -102,7 +108,7 @@ def dealership_menu():
         elif choice == "6":
             dealership_functions.sort_dealership_employees_desc()
         elif choice == "7":
-            main_menu()
+            break
         else:
             print("Please enter a valid option:")
             
