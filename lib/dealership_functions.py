@@ -70,9 +70,7 @@ def delete_dealership():
 def update_dealership():
     print("Update Dealership:")
     title = input("Enter name of the dealership: ")
-    location = input("Enter dealership location: ")
-    
-    dealership = Dealer.find_by_title_and_location(title, location)
+    dealership = Dealer.find_by_title(title)
     
     
     

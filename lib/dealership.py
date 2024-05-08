@@ -63,14 +63,20 @@ class Dealer:
                 UPDATE dealerships 
                 SET inventory = (
                     SELECT COUNT(*) 
-                    FROM cars 
-                    WHERE cars.dealership_id = dealerships.id
+                    FROM dealerships 
+                    WHERE dealerships.dealership_id = dealerships.id
                 )
             """)
             CONN.commit()
         except Exception as e:
             CONN.rollback()
-       
+
+    @classmethod
+    def find_by_title(cls, title):
+        data = CURSOR.execute("SELECT * FROM dealerships WHERE title = ?", (title,)).fetchone()
+        if data:
+            return cls.dealership_from_db(data)
+    
     #display the cars in the inventory 
     @staticmethod
     def display_inventory(dealership_id):
@@ -123,11 +129,11 @@ class Dealer:
         else:
             print("No dealerships found to delete")
 
-    @classmethod
-    def find_by_title_and_location(cls, title, location):
-        data = CURSOR.execute("SELECT * FROM dealerships WHERE title = ? AND location = ?", (title, location)).fetchone()
-        if data:
-            return cls.dealer_from_db_from_db(data)
+    # @classmethod
+    # def find_by_title(cls, title, location):
+    #     data = CURSOR.execute("SELECT * FROM dealerships WHERE title = ?", (title, location)).fetchone()
+    #     if data:
+    #         return cls.dealer_from_db(data)
         
 
     def update(self, new_title, new_location, new_phone_number, new_employees, new_inventory):
