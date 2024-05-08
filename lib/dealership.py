@@ -4,13 +4,13 @@ from car import Car
 class Dealer:
     all = {}
     
-    def __init__(self, id, title, location, phone_number, employees):
+    def __init__(self, id, title, location, phone_number, employees, inventory):
         self.id = id
         self.title = title
         self.location = location
         self.phone_number = phone_number
         self.employees = employees
-        self.inventory = 0
+        self.inventory = inventory
         
 
     def __str__(self):
@@ -53,7 +53,7 @@ class Dealer:
     
     @classmethod
     def dealership_from_db(cls, dealership_row):
-        return cls(dealership_row[0], dealership_row[1], dealership_row[2], dealership_row[3], dealership_row[4], dealership_row[5], dealership_row[6], dealership_row[7])
+        return cls(dealership_row[0], dealership_row[1], dealership_row[2], dealership_row[3], dealership_row[4], dealership_row[5])
 
     @classmethod
     def update_inventory(cls):
@@ -100,18 +100,18 @@ class Dealer:
 
         dealers = []
         for result in results:
-            dealer = cls(result[0], result[1], result[2], result[3], result[4])
+            dealer = cls(result[0], result[1], result[2], result[3], result[4], result [5])
             dealers.append(dealer)
 
         return dealers
     
     @classmethod
-    def add_dealership(cls, title, location, phone_number, employees, inventory, available):
-        CURSOR.execute("INSERT INTO dealerships (title, location, phone number, employees, inventory, available) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                    (title, location, phone_number, employees, inventory, available,))
+    def add_dealership(cls, title, location, phone_number, employees, inventory):
+        CURSOR.execute("INSERT INTO dealerships (title, location, phone number, employees, inventory) VALUES (?, ?, ?, ?, ?)",
+                    (title, location, phone_number, employees, inventory))
         CONN.commit() 
         new_dealership_id = CURSOR.lastrowid 
-        return cls.car_from_db((new_dealership_id, title, location, phone_number, employees, inventory, available))
+        return cls.dealership_from_db((new_dealership_id, title, location, phone_number, employees, inventory))
     
     @classmethod
     def delete_dealership(cls, title, location):
@@ -130,7 +130,7 @@ class Dealer:
             return cls.dealer_from_db_from_db(data)
         
 
-    def update(self, new_title, new_location, new_phone_number, new_employees, new_inventory, new_available):
+    def update(self, new_title, new_location, new_phone_number, new_employees, new_inventory):
             
         if new_title:
             self.title = new_title
@@ -142,12 +142,10 @@ class Dealer:
             self.employees = new_employees
         if new_inventory:
             self.inventory = new_inventory
-        if new_available is not None:
-            new_available_int = 1 if new_available else 0
-            self.available = new_available_int 
+    
         
-        CURSOR.execute("UPDATE dealerships SET title = ?, location = ?, phone number = ?, employees = ?, inventory = ?, available = ? WHERE id = ?",
-                    (self.title, self.location, self.phone_number, self.employees, self.inventory, self.available, self.id))
+        CURSOR.execute("UPDATE dealerships SET title = ?, location = ?, phone number = ?, employees = ?, inventory = ?, WHERE id = ?",
+                    (self.title, self.location, self.phone_number, self.employees, self.inventory, self.id))
         CONN.commit()
         
         return self 
@@ -158,7 +156,7 @@ class Dealer:
         return [cls.dealership_from_db(dealership_row) for dealership_row in sort_dealership_asc]
 
     @classmethod
-    def sort_dealership_inventory_des(cls):
+    def sort_dealership_inventory_desc(cls):
         sort_inventory_desc =  CURSOR.execute("SELECT * FROM dealerships ORDER BY dealerships.inventory DESC;").fetchall()
         return [cls.dealership_from_db(dealership_row) for dealership_row in sort_inventory_desc]
         
@@ -168,14 +166,14 @@ class Dealer:
         return [cls.dealership_from_db(dealership_row) for dealership_row in sort_employees_asc]
     
     @classmethod
-    def sort_dealership_employees_des(cls):
-        sort_employees_desc = CURSOR.execute("SELECT * FROM cars ORDER BY dealerships.employees DESC;").fetchall()
-        return [cls.dealership_from_db_from_db(dealership_row) for dealership_row in sort_employees_desc]
+    def sort_dealership_employees_desc(cls):
+        sort_employees_desc = CURSOR.execute("SELECT * FROM dealerships ORDER BY dealerships.employees DESC;").fetchall()
+        return [cls.dealership_from_db(dealership_row) for dealership_row in sort_employees_desc]
 
-    @classmethod
-    def see_only_available_dealerships(cls):
-        only_available = CURSOR.execute("SELECT * FROM dealerships WHERE available = 1;").fetchall()
-        return [cls.dealership_from_db_from_db(dealership_row) for dealership_row in only_available]
+    # @classmethod
+    # def see_only_available_dealerships(cls):
+    #     only_available = CURSOR.execute("SELECT * FROM dealerships WHERE available = 1;").fetchall()
+    #     return [cls.dealership_from_db_from_db(dealership_row) for dealership_row in only_available]
 
     # @classmethod
     # def update_inventory(cls):
