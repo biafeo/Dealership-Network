@@ -176,5 +176,3 @@ class Car:
     def see_only_sold_cars(cls):
         only_sold =  CURSOR.execute("SELECT * FROM cars WHERE available = 0;").fetchall()
         return [cls.car_from_db(car_row) for car_row in only_sold]
-Car.create_table()
-print("car table created")

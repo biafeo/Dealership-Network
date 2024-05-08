@@ -1,14 +1,17 @@
 from __init__ import CURSOR, CONN
+from car import Car
 
 class Dealer:
     all = {}
     
-    def __init__(self, title, location, phone_number, employees):
+    def __init__(self, id, title, location, phone_number, employees):
+        self.id = id
         self.title = title
         self.location = location
         self.phone_number = phone_number
         self.employees = employees
         self.inventory = 0
+        
 
     def __str__(self):
         return f"Dealer Name: {self.title}\nLocation: {self.location}\nContact: {self.phone_number}\nEmployees: {self.employees}\nInventory: {self.inventory}"
@@ -47,30 +50,67 @@ class Dealer:
 
         CURSOR.execute(sql, (self.title, self.location, self.phone_number, self.employees))
         CONN.commit()
+        
+ #inventory display the amount of cars in inventory cell
+ 
+    @classmethod
+    def update_inventory(cls):
+        """Update the inventory column in the dealerships table based on the count of cars associated with each dealership."""
+        try:
+            CURSOR.execute("""
+                UPDATE dealerships 
+                SET inventory = (
+                    SELECT COUNT(*) 
+                    FROM cars 
+                    WHERE cars.dealership_id = dealerships.id
+                )
+            """)
+            CONN.commit()
+        except Exception as e:
+            CONN.rollback()
+       
+    #display the cars in the inventory 
+    @staticmethod
+    def display_inventory(dealership_id):
+        """Display the inventory of cars for a specific dealership"""
+        sql = """
+            SELECT * FROM cars WHERE dealership_id = ?
+        """
+        CURSOR.execute(sql, (dealership_id,))
+        car_data = CURSOR.fetchall()
 
-
+        return car_data
+        
+    
+    
     @classmethod
     def dealer_from_db(cls, dealer_row):
-        return cls(dealer_row[1], dealer_row[2], dealer_row[3], dealer_row[4])
+        return cls(dealer_row[1], dealer_row[2], dealer_row[3], dealer_row[4], dealer_row[5])
 
     @classmethod
     def get_all_dealers(cls):
-        """Return a list containing a Dealer object per row in the dealerships table"""
+        """Return a list of all Dealer objects"""
         sql = """
             SELECT * FROM dealerships
         """
+        CURSOR.execute(sql)
+        results = CURSOR.fetchall()
 
-        dealer_data = CURSOR.execute(sql).fetchall()
-        return [cls.dealer_from_db(dealer_row) for dealer_row in dealer_data]
+        dealers = []
+        for result in results:
+            dealer = cls(result[0], result[1], result[2], result[3], result[4])
+            dealers.append(dealer)
 
-    @classmethod
-    def update_inventory(cls):
-        """Update the inventory column of each dealership with the count of cars associated with it"""
-        dealerships = CURSOR.execute("SELECT id FROM dealerships").fetchall()
-        for dealership in dealerships:
-            dealership_id = dealership[0]
-            count_query = CURSOR.execute("SELECT COUNT(*) FROM cars WHERE dealership_id = ?", (dealership_id,))
-            count = count_query.fetchone()[0]
-            CURSOR.execute("UPDATE dealerships SET inventory = ? WHERE id = ?", (count, dealership_id))
+        return dealers
 
-        CONN.commit()
+    # @classmethod
+    # def update_inventory(cls):
+    #     """Update the inventory column of each dealership with the count of cars associated with it"""
+    #     dealerships = CURSOR.execute("SELECT id FROM dealerships").fetchall()
+    #     for dealership in dealerships:
+    #         dealership_id = dealership[0]
+    #         count_query = CURSOR.execute("SELECT COUNT(*) FROM cars WHERE dealership_id = ?", (dealership_id,))
+    #         count = count_query.fetchone()[0]
+    #         CURSOR.execute("UPDATE dealerships SET inventory = ? WHERE id = ?", (count, dealership_id))
+
+    #     CONN.commit()

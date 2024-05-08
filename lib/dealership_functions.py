@@ -1,21 +1,52 @@
 from dealership import Dealer
 from tabulate import tabulate
+from car import Car
 
+
+Dealer.update_inventory() 
 def view_all_dealerships():
     print("View All Dealerships:")
-    dealership = Dealer.get_all_dealers()
-    if dealership:
-        headers = ["Title", "Location", "Inventory", "Phone Number", "Employees"]
+    dealerships = Dealer.get_all_dealers()
+    if dealerships:
+        headers = ["", "Title", "Location", "Phone Number", "Employees", "Inventory"]
         rows = []
-        for dealership in dealership:
-            availability = bool(dealership.open)
-            open_text = "Open" if availability else "Closed"
-            row = [dealership.title, dealership.location, dealership.inventory, dealership.phone_number, dealership.employees, open_text]
+        for dealership in dealerships:
+            row = [dealership.id, dealership.title, dealership.location, dealership.phone_number, dealership.employees, dealership.inventory]
+            rows.append(row)
+
+        print(tabulate(rows, headers=headers, tablefmt="grid"))
+
+        dealership_index = input("Enter the number of the dealership you want to view inventory for: ")
+
+        try:
+            dealership_index = int(dealership_index)
+            if 1 <= dealership_index <= len(dealerships):
+                selected_dealership = dealerships[dealership_index - 1]
+                Dealer.update_inventory()
+                car_data = selected_dealership.display_inventory(selected_dealership.id)
+                display_inventory(car_data)
+            else:
+                print("Invalid dealership number. Please try again.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+    else:
+        print("No dealerships found.")
+
+
+def display_inventory(car_data):
+    if car_data:
+        headers = ["Make", "Model", "Year", "Price", "Mileage", "Color", "Car Type", "Available"]
+        rows = []
+        for car_row in car_data:
+            car = Car.car_from_db(car_row)
+            availability_text = "Yes" if car.available else "No"
+            row = [car.make, car.model, car.year, car.price, car.mileage, car.color, car.car_type, availability_text]
             rows.append(row)
         print(tabulate(rows, headers=headers, tablefmt="grid"))
     else:
-        print("No dealership found.")
-
+        print("No cars found in inventory for the selected dealership.")
+        
+        
 def add_dealership():
     title = input("Enter car make: ")
     location = input("Enter car model: ")
@@ -42,6 +73,9 @@ def update_dealership():
     location = input("Enter dealership location: ")
     
     dealership = Dealer.find_by_title_and_location(title, location)
+    
+    
+    
     
     
     if dealership:
