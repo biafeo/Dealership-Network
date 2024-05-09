@@ -86,7 +86,7 @@ class Car:
         return cls.car_from_db((new_car_id, make, model, year, price, mileage, color, car_type, available, dealership_id))
             
                 
-    #method to update car
+    # update car
 
     def update(self, new_make, new_model, new_year, new_price, new_mileage, new_color, new_car_type, new_available, new_dealership_id):
             
