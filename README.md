@@ -1,4 +1,4 @@
-README = """
+
 # Dealership Network
 
 ## Overview
