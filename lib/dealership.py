@@ -50,6 +50,18 @@ class Dealer:
         CURSOR.execute(sql, (self.title, self.location, self.phone_number, self.employees))
         CONN.commit()
         
+    def cars(self):
+        from car import Car
+        """Retrieve the cars associated with this dealer"""
+        sql = """
+            SELECT * FROM cars WHERE dealership_id = ?
+        """
+        CURSOR.execute(sql, (self.id,))
+        car_data = CURSOR.fetchall()
+        
+        return [Car.car_from_db(row) for row in car_data]
+            
+            
         
     @classmethod
     def dealer_from_db(cls, dealer_row):

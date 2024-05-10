@@ -72,8 +72,11 @@ class Car:
 
         car_data = CURSOR.execute(sql).fetchall()
         return [cls.car_from_db(car_row) for car_row in car_data]
-       
-       
+    
+    def dealership(self):
+        from dealership import Dealer
+        return Dealer.find_by_id(self.dealership_id)
+
        
     #method to add a car into DB
     
@@ -181,3 +184,4 @@ class Car:
     def see_only_sold_cars(cls):
         only_sold =  CURSOR.execute("SELECT * FROM cars WHERE available = 0;").fetchall()
         return [cls.car_from_db(car_row) for car_row in only_sold]
+
